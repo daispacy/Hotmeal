@@ -1,0 +1,16 @@
+//
+//  CartCell.m
+//  AppHotmeal
+//
+//  Created by admin on 3/10/14.
+//  Copyright (c) 2014 admin. All rights reserved.
+//
+
+#import "CartCell.h"
+
+@implementation CartCell
+
+- (IBAction)checkPrice:(id)sender {
+
+}
+@end
