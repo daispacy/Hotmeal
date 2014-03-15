@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AreaViewController.h"
 @interface indexViewController : UIViewController{
     IBOutlet UIButton *btnNext;
 }
@@ -16,4 +17,5 @@
 @property (retain, nonatomic) IBOutlet UIButton *btnNext;
 @property(strong,nonatomic)NSString*idA;
 @property(strong,nonatomic)NSString*nameArea;
+@property(strong,nonatomic)AreaViewController*_areaViewController;
 @end

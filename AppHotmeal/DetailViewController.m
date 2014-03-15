@@ -43,6 +43,7 @@
 @synthesize totalCart;
 @synthesize idArea;
 @synthesize nameArea;
+@synthesize status;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -60,6 +61,7 @@
     idEstore = [defaults objectForKey:@"idEstore"];
     idArea = [defaults objectForKey:@"idArea"];
     nameArea=[defaults objectForKey:@"nameArea"];
+    status=[[defaults objectForKey:@"status"]doubleValue];
     self.productInCart=[[NSMutableArray alloc]init];
     totalCart=0;
     
@@ -182,7 +184,9 @@
     NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
     [nf setNumberStyle:NSNumberFormatterDecimalStyle];
     NSString *someString = [nf stringFromNumber:someNumber];
-
+    if(status==0){
+        [cell.btn setHidden:TRUE];
+    }
     [cell.price setText:[NSString stringWithFormat:@"%@ VND",someString]];
     //set up image
     NSString*url=[NSString stringWithFormat:@"http://hotmeal.vn/uploads/%@/products/a_%@",object.store_id,object.image];

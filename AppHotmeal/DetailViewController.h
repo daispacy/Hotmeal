@@ -20,4 +20,5 @@
 @property(strong,nonatomic)NSMutableArray *productInCart;
 @property(assign,nonatomic)NSInteger totalCart;
 @property(strong,nonatomic)NSString*nameArea;
+@property(assign,nonatomic)NSInteger status;
 @end

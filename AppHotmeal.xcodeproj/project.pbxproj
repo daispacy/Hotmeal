@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8426D57218D422EC005D0899 /* AreaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8426D57018D422EB005D0899 /* AreaViewController.m */; };
+		8426D57318D422EC005D0899 /* AreaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8426D57118D422EB005D0899 /* AreaViewController.xib */; };
 		844330E918CEBFB4000A2368 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844330E818CEBFB4000A2368 /* QuartzCore.framework */; };
 		844330EA18CEBFFB000A2368 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A0BB3018C9DC90000767D7 /* CoreGraphics.framework */; };
 		8480CBC618D1A1B000865226 /* userBuidler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8480CBC518D1A1B000865226 /* userBuidler.m */; };
@@ -30,7 +32,6 @@
 		84A0BB3F18C9DC90000767D7 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A0BB3E18C9DC90000767D7 /* Default.png */; };
 		84A0BB4118C9DC90000767D7 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A0BB4018C9DC90000767D7 /* Default@2x.png */; };
 		84A0BB4318C9DC90000767D7 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A0BB4218C9DC90000767D7 /* Default-568h@2x.png */; };
-		84A0BB4618C9DC90000767D7 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84A0BB4418C9DC90000767D7 /* MainStoryboard.storyboard */; };
 		84A0BB4918C9DC90000767D7 /* indexViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A0BB4818C9DC90000767D7 /* indexViewController.m */; };
 		84A0BB9918C9DF6E000767D7 /* EstoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A0BB9818C9DF6E000767D7 /* EstoreCell.m */; };
 		84A0BB9C18C9DF82000767D7 /* ListingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A0BB9B18C9DF82000767D7 /* ListingViewController.m */; };
@@ -44,11 +45,21 @@
 		84B1976F18CDB1D000AD07B8 /* cartBuider.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B1976E18CDB1CF00AD07B8 /* cartBuider.m */; };
 		84B1977218CDB1DC00AD07B8 /* cartConnect.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B1977118CDB1DB00AD07B8 /* cartConnect.m */; };
 		84B1977518CDB1EB00AD07B8 /* cartManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B1977418CDB1EB00AD07B8 /* cartManager.m */; };
+		84B3C1D818D459F70017FA9E /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B3C1D618D459F60017FA9E /* RegisterViewController.m */; };
+		84B3C1D918D459F70017FA9E /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B3C1D718D459F70017FA9E /* RegisterViewController.xib */; };
+		84B3C1DD18D45A270017FA9E /* LoginPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B3C1DB18D45A270017FA9E /* LoginPopupViewController.m */; };
+		84B3C1DE18D45A270017FA9E /* LoginPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B3C1DC18D45A270017FA9E /* LoginPopupViewController.xib */; };
 		84BA521818D14131009F71F7 /* ProcessCartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BA521718D14131009F71F7 /* ProcessCartViewController.m */; };
 		84BAAE5818D3E9A10053C641 /* PlaceDeliveryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BAAE5618D3E9A10053C641 /* PlaceDeliveryViewController.m */; };
 		84BAAE5918D3E9A10053C641 /* PlaceDeliveryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BAAE5718D3E9A10053C641 /* PlaceDeliveryViewController.xib */; };
-		84BAAE5C18D402F30053C641 /* popupAreaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BAAE5B18D402F30053C641 /* popupAreaCell.m */; };
 		84DF408718CD4F2400DFC634 /* ProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DF408618CD4F2400DFC634 /* ProductCell.m */; };
+		84E1691718D4429A003928D7 /* payment.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E1691618D4429A003928D7 /* payment.m */; };
+		84E1691A18D442A8003928D7 /* paymentBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E1691918D442A8003928D7 /* paymentBuilder.m */; };
+		84E1691D18D442B5003928D7 /* paymentConnect.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E1691C18D442B5003928D7 /* paymentConnect.m */; };
+		84E1692018D442C5003928D7 /* paymentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E1691F18D442C5003928D7 /* paymentManager.m */; };
+		84E1692418D445B3003928D7 /* PaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E1692218D445B3003928D7 /* PaymentViewController.m */; };
+		84E1692518D445B3003928D7 /* PaymentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E1692318D445B3003928D7 /* PaymentViewController.xib */; };
+		84E1692818D44FDF003928D7 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84E1692618D44FDF003928D7 /* MainStoryboard.storyboard */; };
 		84F6AE0B18D2CF5D004B7397 /* orderaddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F6AE0A18D2CF5D004B7397 /* orderaddress.m */; };
 		84F6AE1118D2CFAD004B7397 /* orderaddressBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F6AE1018D2CFAD004B7397 /* orderaddressBuilder.m */; };
 		84F6AE1418D2CFBE004B7397 /* orderaddressConnect.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F6AE1318D2CFBE004B7397 /* orderaddressConnect.m */; };
@@ -62,7 +73,6 @@
 		84FB8BA818CAB5A200C2C6FC /* estoreDetailBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FB8BA718CAB5A200C2C6FC /* estoreDetailBuilder.m */; };
 		84FB8BAB18CAB5BD00C2C6FC /* estoreDetailConnect.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FB8BAA18CAB5BD00C2C6FC /* estoreDetailConnect.m */; };
 		84FB8BAE18CAB5D700C2C6FC /* estoreDetailManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FB8BAD18CAB5D700C2C6FC /* estoreDetailManager.m */; };
-		84FBE89018D016AD008FB0B2 /* areaListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FBE88F18D016AD008FB0B2 /* areaListViewController.m */; };
 		84FBE89518D0172D008FB0B2 /* area.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FBE89418D0172D008FB0B2 /* area.m */; };
 		84FBE89818D0173E008FB0B2 /* areaBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FBE89718D0173E008FB0B2 /* areaBuilder.m */; };
 		84FBE89B18D0174B008FB0B2 /* areaConnect.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FBE89A18D0174B008FB0B2 /* areaConnect.m */; };
@@ -72,6 +82,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8426D56F18D422EB005D0899 /* AreaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AreaViewController.h; sourceTree = "<group>"; };
+		8426D57018D422EB005D0899 /* AreaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AreaViewController.m; sourceTree = "<group>"; };
+		8426D57118D422EB005D0899 /* AreaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AreaViewController.xib; sourceTree = "<group>"; };
 		844330E818CEBFB4000A2368 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8480CBC218D1A18200865226 /* userDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = userDelegate.h; sourceTree = "<group>"; };
 		8480CBC318D1A19A00865226 /* userManagerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = userManagerDelegate.h; sourceTree = "<group>"; };
@@ -118,7 +131,6 @@
 		84A0BB3E18C9DC90000767D7 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		84A0BB4018C9DC90000767D7 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		84A0BB4218C9DC90000767D7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		84A0BB4518C9DC90000767D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		84A0BB4718C9DC90000767D7 /* indexViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = indexViewController.h; sourceTree = "<group>"; };
 		84A0BB4818C9DC90000767D7 /* indexViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = indexViewController.m; sourceTree = "<group>"; };
 		84A0BB9718C9DF6E000767D7 /* EstoreCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EstoreCell.h; sourceTree = "<group>"; };
@@ -149,15 +161,33 @@
 		84B1977118CDB1DB00AD07B8 /* cartConnect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cartConnect.m; sourceTree = "<group>"; };
 		84B1977318CDB1EB00AD07B8 /* cartManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cartManager.h; sourceTree = "<group>"; };
 		84B1977418CDB1EB00AD07B8 /* cartManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cartManager.m; sourceTree = "<group>"; };
+		84B3C1D518D459F60017FA9E /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
+		84B3C1D618D459F60017FA9E /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		84B3C1D718D459F70017FA9E /* RegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
+		84B3C1DA18D45A270017FA9E /* LoginPopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginPopupViewController.h; sourceTree = "<group>"; };
+		84B3C1DB18D45A270017FA9E /* LoginPopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginPopupViewController.m; sourceTree = "<group>"; };
+		84B3C1DC18D45A270017FA9E /* LoginPopupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginPopupViewController.xib; sourceTree = "<group>"; };
 		84BA521618D14131009F71F7 /* ProcessCartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcessCartViewController.h; sourceTree = "<group>"; };
 		84BA521718D14131009F71F7 /* ProcessCartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProcessCartViewController.m; sourceTree = "<group>"; };
 		84BAAE5518D3E9A10053C641 /* PlaceDeliveryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceDeliveryViewController.h; sourceTree = "<group>"; };
 		84BAAE5618D3E9A10053C641 /* PlaceDeliveryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceDeliveryViewController.m; sourceTree = "<group>"; };
 		84BAAE5718D3E9A10053C641 /* PlaceDeliveryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceDeliveryViewController.xib; sourceTree = "<group>"; };
-		84BAAE5A18D402F30053C641 /* popupAreaCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = popupAreaCell.h; sourceTree = "<group>"; };
-		84BAAE5B18D402F30053C641 /* popupAreaCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = popupAreaCell.m; sourceTree = "<group>"; };
 		84DF408518CD4F2400DFC634 /* ProductCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductCell.h; sourceTree = "<group>"; };
 		84DF408618CD4F2400DFC634 /* ProductCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductCell.m; sourceTree = "<group>"; };
+		84E1691318D44271003928D7 /* paymentDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = paymentDelegate.h; sourceTree = "<group>"; };
+		84E1691418D44284003928D7 /* paymentManagerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = paymentManagerDelegate.h; sourceTree = "<group>"; };
+		84E1691518D4429A003928D7 /* payment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = payment.h; sourceTree = "<group>"; };
+		84E1691618D4429A003928D7 /* payment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = payment.m; sourceTree = "<group>"; };
+		84E1691818D442A8003928D7 /* paymentBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = paymentBuilder.h; sourceTree = "<group>"; };
+		84E1691918D442A8003928D7 /* paymentBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = paymentBuilder.m; sourceTree = "<group>"; };
+		84E1691B18D442B5003928D7 /* paymentConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = paymentConnect.h; sourceTree = "<group>"; };
+		84E1691C18D442B5003928D7 /* paymentConnect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = paymentConnect.m; sourceTree = "<group>"; };
+		84E1691E18D442C5003928D7 /* paymentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = paymentManager.h; sourceTree = "<group>"; };
+		84E1691F18D442C5003928D7 /* paymentManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = paymentManager.m; sourceTree = "<group>"; };
+		84E1692118D445B3003928D7 /* PaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentViewController.h; sourceTree = "<group>"; };
+		84E1692218D445B3003928D7 /* PaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentViewController.m; sourceTree = "<group>"; };
+		84E1692318D445B3003928D7 /* PaymentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentViewController.xib; sourceTree = "<group>"; };
+		84E1692718D44FDF003928D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		84F6AE0918D2CF5D004B7397 /* orderaddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = orderaddress.h; sourceTree = "<group>"; };
 		84F6AE0A18D2CF5D004B7397 /* orderaddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = orderaddress.m; sourceTree = "<group>"; };
 		84F6AE0D18D2CF7F004B7397 /* orderaddressDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = orderaddressDelegate.h; sourceTree = "<group>"; };
@@ -187,8 +217,6 @@
 		84FB8BAA18CAB5BD00C2C6FC /* estoreDetailConnect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = estoreDetailConnect.m; sourceTree = "<group>"; };
 		84FB8BAC18CAB5D700C2C6FC /* estoreDetailManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = estoreDetailManager.h; sourceTree = "<group>"; };
 		84FB8BAD18CAB5D700C2C6FC /* estoreDetailManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = estoreDetailManager.m; sourceTree = "<group>"; };
-		84FBE88E18D016AD008FB0B2 /* areaListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = areaListViewController.h; sourceTree = "<group>"; };
-		84FBE88F18D016AD008FB0B2 /* areaListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = areaListViewController.m; sourceTree = "<group>"; };
 		84FBE89118D01707008FB0B2 /* areaDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = areaDelegate.h; sourceTree = "<group>"; };
 		84FBE89218D01718008FB0B2 /* areaManagerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = areaManagerDelegate.h; sourceTree = "<group>"; };
 		84FBE89318D0172D008FB0B2 /* area.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = area.h; sourceTree = "<group>"; };
@@ -302,6 +330,8 @@
 		84A0BB3218C9DC90000767D7 /* AppHotmeal */ = {
 			isa = PBXGroup;
 			children = (
+				84E1692618D44FDF003928D7 /* MainStoryboard.storyboard */,
+				84E1691218D44252003928D7 /* PaymentMethod */,
 				84F6AE1E18D2F526004B7397 /* Library */,
 				84F6AE1818D2F0EF004B7397 /* PopupView */,
 				84F6AE0C18D2CF63004B7397 /* OrderAddress */,
@@ -313,10 +343,9 @@
 				8497245A18CAD90F0053D727 /* product */,
 				84A0BB5118C9DD8E000767D7 /* Detail */,
 				84A0BB5018C9DD86000767D7 /* Area */,
-				84A0BB4F18C9DD7E000767D7 /* Listing */,
+				84A0BB4F18C9DD7E000767D7 /* Estore */,
 				84A0BB3B18C9DC90000767D7 /* indexAppDelegate.h */,
 				84A0BB3C18C9DC90000767D7 /* indexAppDelegate.m */,
-				84A0BB4418C9DC90000767D7 /* MainStoryboard.storyboard */,
 				84A0BB3318C9DC90000767D7 /* Supporting Files */,
 			);
 			path = AppHotmeal;
@@ -336,7 +365,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		84A0BB4F18C9DD7E000767D7 /* Listing */ = {
+		84A0BB4F18C9DD7E000767D7 /* Estore */ = {
 			isa = PBXGroup;
 			children = (
 				84A0BBA318C9DFA7000767D7 /* estore.h */,
@@ -350,7 +379,7 @@
 				84A0BB9F18C9DF93000767D7 /* estoreManager.h */,
 				84A0BBA018C9DF93000767D7 /* estoreManager.m */,
 			);
-			name = Listing;
+			name = Estore;
 			sourceTree = "<group>";
 		};
 		84A0BB5018C9DD86000767D7 /* Area */ = {
@@ -398,8 +427,6 @@
 				84B1976118CDAA3D00AD07B8 /* ShoppingCartViewController.m */,
 				84FB8B9E18CAA7A400C2C6FC /* DetailViewController.h */,
 				84FB8B9F18CAA7A400C2C6FC /* DetailViewController.m */,
-				84FBE88E18D016AD008FB0B2 /* areaListViewController.h */,
-				84FBE88F18D016AD008FB0B2 /* areaListViewController.m */,
 				84BA521618D14131009F71F7 /* ProcessCartViewController.h */,
 				84BA521718D14131009F71F7 /* ProcessCartViewController.m */,
 				8480CBD018D1BC9700865226 /* loginViewController.h */,
@@ -442,6 +469,23 @@
 			name = Cell;
 			sourceTree = "<group>";
 		};
+		84E1691218D44252003928D7 /* PaymentMethod */ = {
+			isa = PBXGroup;
+			children = (
+				84E1691318D44271003928D7 /* paymentDelegate.h */,
+				84E1691418D44284003928D7 /* paymentManagerDelegate.h */,
+				84E1691518D4429A003928D7 /* payment.h */,
+				84E1691618D4429A003928D7 /* payment.m */,
+				84E1691818D442A8003928D7 /* paymentBuilder.h */,
+				84E1691918D442A8003928D7 /* paymentBuilder.m */,
+				84E1691B18D442B5003928D7 /* paymentConnect.h */,
+				84E1691C18D442B5003928D7 /* paymentConnect.m */,
+				84E1691E18D442C5003928D7 /* paymentManager.h */,
+				84E1691F18D442C5003928D7 /* paymentManager.m */,
+			);
+			name = PaymentMethod;
+			sourceTree = "<group>";
+		};
 		84F6AE0C18D2CF63004B7397 /* OrderAddress */ = {
 			isa = PBXGroup;
 			children = (
@@ -468,8 +512,18 @@
 				84BAAE5518D3E9A10053C641 /* PlaceDeliveryViewController.h */,
 				84BAAE5618D3E9A10053C641 /* PlaceDeliveryViewController.m */,
 				84BAAE5718D3E9A10053C641 /* PlaceDeliveryViewController.xib */,
-				84BAAE5A18D402F30053C641 /* popupAreaCell.h */,
-				84BAAE5B18D402F30053C641 /* popupAreaCell.m */,
+				8426D56F18D422EB005D0899 /* AreaViewController.h */,
+				8426D57018D422EB005D0899 /* AreaViewController.m */,
+				8426D57118D422EB005D0899 /* AreaViewController.xib */,
+				84E1692118D445B3003928D7 /* PaymentViewController.h */,
+				84E1692218D445B3003928D7 /* PaymentViewController.m */,
+				84E1692318D445B3003928D7 /* PaymentViewController.xib */,
+				84B3C1D518D459F60017FA9E /* RegisterViewController.h */,
+				84B3C1D618D459F60017FA9E /* RegisterViewController.m */,
+				84B3C1D718D459F70017FA9E /* RegisterViewController.xib */,
+				84B3C1DA18D45A270017FA9E /* LoginPopupViewController.h */,
+				84B3C1DB18D45A270017FA9E /* LoginPopupViewController.m */,
+				84B3C1DC18D45A270017FA9E /* LoginPopupViewController.xib */,
 			);
 			name = PopupView;
 			sourceTree = "<group>";
@@ -541,9 +595,13 @@
 				84A0BB3F18C9DC90000767D7 /* Default.png in Resources */,
 				84A0BB4118C9DC90000767D7 /* Default@2x.png in Resources */,
 				84A0BB4318C9DC90000767D7 /* Default-568h@2x.png in Resources */,
-				84A0BB4618C9DC90000767D7 /* MainStoryboard.storyboard in Resources */,
 				84F6AE1D18D2F11C004B7397 /* TimePickerViewController.xib in Resources */,
 				84BAAE5918D3E9A10053C641 /* PlaceDeliveryViewController.xib in Resources */,
+				8426D57318D422EC005D0899 /* AreaViewController.xib in Resources */,
+				84E1692518D445B3003928D7 /* PaymentViewController.xib in Resources */,
+				84E1692818D44FDF003928D7 /* MainStoryboard.storyboard in Resources */,
+				84B3C1D918D459F70017FA9E /* RegisterViewController.xib in Resources */,
+				84B3C1DE18D45A270017FA9E /* LoginPopupViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -583,7 +641,6 @@
 				84B1976F18CDB1D000AD07B8 /* cartBuider.m in Sources */,
 				84B1977218CDB1DC00AD07B8 /* cartConnect.m in Sources */,
 				84B1977518CDB1EB00AD07B8 /* cartManager.m in Sources */,
-				84FBE89018D016AD008FB0B2 /* areaListViewController.m in Sources */,
 				84FBE89518D0172D008FB0B2 /* area.m in Sources */,
 				84FBE89818D0173E008FB0B2 /* areaBuilder.m in Sources */,
 				84FBE89B18D0174B008FB0B2 /* areaConnect.m in Sources */,
@@ -604,7 +661,14 @@
 				84F6AE2318D2F56B004B7397 /* MJPopupBackgroundView.m in Sources */,
 				84F6AE2418D2F56B004B7397 /* UIViewController+MJPopupViewController.m in Sources */,
 				84BAAE5818D3E9A10053C641 /* PlaceDeliveryViewController.m in Sources */,
-				84BAAE5C18D402F30053C641 /* popupAreaCell.m in Sources */,
+				8426D57218D422EC005D0899 /* AreaViewController.m in Sources */,
+				84E1691718D4429A003928D7 /* payment.m in Sources */,
+				84E1691A18D442A8003928D7 /* paymentBuilder.m in Sources */,
+				84E1691D18D442B5003928D7 /* paymentConnect.m in Sources */,
+				84E1692018D442C5003928D7 /* paymentManager.m in Sources */,
+				84E1692418D445B3003928D7 /* PaymentViewController.m in Sources */,
+				84B3C1D818D459F70017FA9E /* RegisterViewController.m in Sources */,
+				84B3C1DD18D45A270017FA9E /* LoginPopupViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -619,10 +683,10 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		84A0BB4418C9DC90000767D7 /* MainStoryboard.storyboard */ = {
+		84E1692618D44FDF003928D7 /* MainStoryboard.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				84A0BB4518C9DC90000767D7 /* en */,
+				84E1692718D44FDF003928D7 /* en */,
 			);
 			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";

@@ -87,10 +87,12 @@
     if ([segue.identifier isEqualToString:@"idEstore"]) {
        
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        estore *object=_estore[indexPath.row];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:[idEstore objectAtIndex:indexPath.row] forKey:@"idEstore"];
+        [defaults setObject:object.id forKey:@"idEstore"];
         [defaults setObject:self.idArea forKey:@"idArea"];
         [defaults setObject:self._nameArea forKey:@"nameArea"];
+        [defaults setObject:[NSString stringWithFormat:@"%d",object.status] forKey:@"status"];
         [defaults synchronize];
     }
 }

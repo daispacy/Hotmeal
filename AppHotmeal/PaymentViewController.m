@@ -1,27 +1,26 @@
 //
-//  PlaceDeliveryViewController.m
+//  PaymentViewController.m
 //  AppHotmeal
 //
 //  Created by admin on 3/15/14.
 //  Copyright (c) 2014 admin. All rights reserved.
 //
 
-#import "PlaceDeliveryViewController.h"
+#import "PaymentViewController.h"
+#import "payment.h"
+#import "paymentManager.h"
+#import "paymentConnect.h"
 #import "UIViewController+MJPopupViewController.h"
-#import "orderaddress.h"
-#import "orderaddressManager.h"
-#import "orderaddressConnect.h"
-@interface PlaceDeliveryViewController ()<orderaddressManagerDelegate>{
-    NSArray*_orderaddress;
-    orderaddressManager*_odManager;
+@interface PaymentViewController ()<paymentManagerDelegate>{
+    NSArray*_payment;
+    paymentManager*_paymentManager;
 }
-
 @end
 
-@implementation PlaceDeliveryViewController
-@synthesize idEstore;
-@synthesize tableArea;
+@implementation PaymentViewController
 @synthesize delegate;
+@synthesize tblPayment;
+@synthesize idEstore;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -34,67 +33,66 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.idEstore=[self.delegate getIdEstore:self];
-    _odManager=[[orderaddressManager alloc]init];
-    _odManager.odConnect=[[orderaddressConnect alloc]init];
-    _odManager.odConnect.delegate=_odManager;
-    _odManager.delegate=self;
-    //[_odManager receiveData:self.idEstore idarea:nil];
-    // Do any additional setup after loading the view from its nib.
+    self.idEstore=[self.delegate getIdEstoreFromPaymentViewController:self];
+    _paymentManager=[[paymentManager alloc]init];
+    _paymentManager.paymentConnect=[[paymentConnect alloc]init];
+    _paymentManager.paymentConnect.delegate=_paymentManager;
+    _paymentManager.delegate=self;
+    [_paymentManager receiveData:self.idEstore];
 }
 -(void)viewDidAppear:(BOOL)animated{
-    self.idEstore=[self.delegate getIdEstore:self];
+    self.idEstore=[self.delegate getIdEstoreFromPaymentViewController:self];
     //[_odManager receiveData:self.idEstore idarea:nil];
     NSLog(@"%@",self.idEstore);
 }
 -(void)viewWillAppear:(BOOL)animated{
-    self.idEstore=[self.delegate getIdEstore:self];
-    [_odManager receiveData:self.idEstore idarea:@""];
+    self.idEstore=[self.delegate getIdEstoreFromPaymentViewController:self];
+    [_paymentManager receiveData:self.idEstore];
     NSLog(@"%@",self.idEstore);
 }
--(void)getDataOrderAddress:(NSArray *)data{
+-(void)getDataPayment:(NSArray *)data{
     
-    NSSortDescriptor *sort=[NSSortDescriptor sortDescriptorWithKey:@"price" ascending:YES];
+    NSSortDescriptor *sort=[NSSortDescriptor sortDescriptorWithKey:@"position" ascending:YES];
     [data sortUsingDescriptors:[NSArray arrayWithObject:sort]];
-    _orderaddress=data;
-    if(_orderaddress.count<1){
+    _payment=data;
+    if(_payment.count<1){
         [self alert:@"Quán chỉ giao đến khu vực hiện tại."];
         [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
     }
-    [self.tableArea reloadData];
+    [self.tblPayment reloadData];
     
 }
 -(void)alert:(NSString*)message{
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Thông báo" message: message delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil]; [alert show]; [alert release];
 }
--(void)getDataOrderAddressFailed:(NSError *)error{
+-(void)getDataPaymentFailed:(NSError *)error{
     [self alert:@"Lỗi nhận dữ liệu từ server."];
     [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _orderaddress.count;
+    return _payment.count;
     
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 
 {
-    orderaddress*object = _orderaddress[indexPath.row];
+    payment*object = _payment[indexPath.row];
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = (UITableViewCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         //cell = [[[NSBundle mainBundle] loadNibNamed:@"popupAreaCell" owner:self options:nil] lastObject];
     }
-    cell.textLabel.textAlignment=UITextAlignmentRight;
-     cell.textLabel.font = [UIFont systemFontOfSize:12.0];
-    [cell.textLabel setText:[NSString stringWithFormat:@"%@ (%@) %@ VND",object.name,object.times,[self convertToNumber:object.price]]];
+    cell.textLabel.textAlignment=UITextAlignmentCenter;
+    cell.textLabel.font = [UIFont systemFontOfSize:12.0];
+    [cell.textLabel setText:[NSString stringWithFormat:@"%@",object.name]];
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    orderaddress*object =_orderaddress[indexPath.row];
-    [self.delegate setArrayOrderAddress:self orderaddress:object];
+    payment*object =_payment[indexPath.row];
+    [self.delegate setIdAndNamePayment:self payment:object];
 }
 -(NSString*)convertToNumber:(NSInteger)value{
     NSNumber *someNumber = [NSNumber numberWithDouble:value];
@@ -103,13 +101,15 @@
     NSString *someString = [nf stringFromNumber:someNumber];
     return someString;
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 - (void)dealloc {
-    [tableArea release];
+    [tblPayment release];
     [super dealloc];
 }
 @end

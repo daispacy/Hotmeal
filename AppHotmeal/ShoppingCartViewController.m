@@ -16,7 +16,9 @@
 #import "UIViewController+MJPopupViewController.h"
 #import "TimePickerViewController.h"
 #import "PlaceDeliveryViewController.h"
-@interface ShoppingCartViewController()<orderaddressManagerDelegate,TimePickerViewDelegate,PlaceDeliveryViewDelegate>{
+#import "PaymentViewController.h"
+#import "payment.h"
+@interface ShoppingCartViewController()<orderaddressManagerDelegate,TimePickerViewDelegate,PlaceDeliveryViewDelegate,PaymentViewDelegate>{
     NSArray*product;
     orderaddressManager*_odManager;
     NSArray*_orderaddress;
@@ -35,6 +37,8 @@
 @synthesize idStore;
 @synthesize fee_delivery;
 @synthesize object;
+@synthesize paymentObject;
+@synthesize _paymentviewcontroller;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -47,9 +51,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.paymentObject=[[payment alloc]init];
+    self.object=[[orderaddress alloc]init];
     self.cartArray=[[NSMutableArray alloc]init];
     self.fee_delivery=0;
     self._placedeliveryviewcontroller = [[PlaceDeliveryViewController alloc] initWithNibName:@"PlaceDeliveryViewController" bundle:nil];
+    self._paymentviewcontroller=[[PaymentViewController alloc] initWithNibName:@"PaymentViewController" bundle:nil];
+    self._paymentviewcontroller.delegate=self;
     self._placedeliveryviewcontroller.delegate=self;
     NSLog(@"did load");
 }
@@ -63,12 +71,12 @@
     //get variables from detailviewcontroller
     self.totalCart=[self.delegate getTotalCart:self];
     self.cartArray=[self.delegate getProduct:self];
-    object = [self.delegate getOrderAddress:self][0];
-    if(object.free_delivery <self.totalCart){
+    self.object = [self.delegate getOrderAddress:self][0];
+    if(self.object.free_delivery <self.totalCart){
         self.fee_delivery=object.price;
     }
     self.totalCart +=self.fee_delivery;
-    [self.lblNameArea setTitle:[NSString stringWithFormat:@"%@ (%@)",[self.delegate getNameArea:self],object.times] forState:UIControlStateNormal];
+    [self.lblNameArea setTitle:[NSString stringWithFormat:@"%@ (%@)",[self.delegate getNameArea:self],self.object.times] forState:UIControlStateNormal];
     [self.txtTotalCart setText:[NSString stringWithFormat:@"%@ VND",[self convertToNumber:self.totalCart]]];
     self.lblFeeDelivery.text=[NSString stringWithFormat:@"%@ VND",[self convertToNumber:self.fee_delivery]];
     NSLog(@"will appear");
@@ -82,19 +90,34 @@
     
 }
 -(void)setArrayOrderAddress:(PlaceDeliveryViewController *)controller orderaddress:(orderaddress *)od{
-    object = od;
-    if(object.free_delivery <self.totalCart){
+    self.object = od;
+    if(self.object.free_delivery <self.totalCart){
         self.fee_delivery=object.price;
     }
     self.totalCart=[self.delegate getTotalCart:self];
     self.totalCart +=self.fee_delivery;
-    [self.lblNameArea setTitle:[NSString stringWithFormat:@"%@ (%@)",object.name,object.times] forState:UIControlStateNormal];
+    [self.lblNameArea setTitle:[NSString stringWithFormat:@"%@ (%@)",self.object.name,self.object.times] forState:UIControlStateNormal];
+    self.lblFeeDelivery.text=[NSString stringWithFormat:@"%@ VND",[self convertToNumber:self.fee_delivery]];
     [self.txtTotalCart setText:[NSString stringWithFormat:@"%@ VND",[self convertToNumber:self.totalCart]]];
-    NSLog(@"%@",od.name);
+    NSLog(@"chay vao roi ma %@",od.name);
+    [self.cartView reloadData];
     [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
 }
 //end delegate
 
+//delegate from PaymentViewcontroller
+-(NSString*)getIdEstoreFromPaymentViewController:(PaymentViewController *)controller{
+    NSLog(@"nhan id store from shopingCart contrller");
+    return [self.delegate getIdEstore1:self];
+    
+}
+-(void)setIdAndNamePayment:(PaymentViewController *)controller payment:(payment *)paymentobject{
+    self.paymentObject =paymentobject;
+    [self.lblPaymentMethod setTitle:[NSString stringWithFormat:@"%@",self.paymentObject.name] forState:UIControlStateNormal];
+    [self.cartView reloadData];
+    [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
+}
+//end delegate
 
 
 //---convert from interger to string with format
@@ -171,6 +194,8 @@
     [_lblNameArea release];
     [_lblFeeDelivery release];
     [_lblTime release];
+    [_lblPaymentMethod release];
+    [_btnThanhToan release];
     [super dealloc];
 }
 
@@ -184,5 +209,12 @@
 }
 - (IBAction)showPopupArea:(id)sender {
     [self presentPopupViewController:self._placedeliveryviewcontroller animationType:1];
+}
+- (IBAction)showPopupPayment:(id)sender {
+    [self presentPopupViewController:self._paymentviewcontroller animationType:1];
+}
+
+- (IBAction)thanhtoan:(id)sender {
+    [self performSegueWithIdentifier:@"thanhtoan" sender:self];
 }
 @end

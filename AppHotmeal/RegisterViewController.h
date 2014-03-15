@@ -1,5 +1,5 @@
 //
-//  popupAreaCell.h
+//  RegisterViewController.h
 //  AppHotmeal
 //
 //  Created by admin on 3/15/14.
@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface popupAreaCell : UITableViewCell
+@interface RegisterViewController : UIViewController
 
-@property (retain, nonatomic) IBOutlet UILabel *lblarea;
 @end

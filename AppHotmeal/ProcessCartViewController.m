@@ -7,10 +7,13 @@
 //
 
 #import "ProcessCartViewController.h"
-#import "areaListViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "selectCell.h"
-@interface ProcessCartViewController()
+#import "LoginPopupViewController.h"
+#import "UIViewController+MJPopupViewController.h"
+@interface ProcessCartViewController()<LoginPopupViewDelegate>{
+    
+}
 @end
 
 @implementation ProcessCartViewController
@@ -27,14 +30,13 @@
 @synthesize idArea;
 @synthesize nameArea;
 @synthesize txtNote;
+@synthesize _loginPopupViewController;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"user name: %@",self.username);
-    self.txtUserName.text=self.username;
-    self.txtFullName.text=self.fullname;
-    self.txtEmail.text=self.email;
-    self.txtAddress.text=self.address;
+    self._loginPopupViewController=[[LoginPopupViewController alloc] initWithNibName:@"LoginPopupViewController" bundle:nil];
+    self._loginPopupViewController.delegate=self;
+    [self presentPopupViewController:self._loginPopupViewController animationType:1];
 	//display alert login
     [self initBorderTextView];
     //[self alert];
@@ -58,12 +60,6 @@
  [[self.txtNote layer] setBorderWidth:2.3];
  [[self.txtNote layer] setCornerRadius:15];
  }
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if ([segue.identifier isEqualToString:@"idAreaProcess"]) {
-        areaListViewController *areaViewController= segue.destinationViewController;
-        areaViewController.idSeque = @"idAreaProcess";
-    }
-}
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     /*
@@ -81,7 +77,14 @@
     }
      */
 }
-
+-(void)returnUser:(LoginPopupViewController *)controller user:(user *)data{
+    self.txtUserName.text=data.name;
+    self.txtEmail.text=data.email;
+    self.txtFullName.text=data.fullname;
+    self.txtAddress.text=data.address;
+    NSLog(@"%@",data.address);
+    [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

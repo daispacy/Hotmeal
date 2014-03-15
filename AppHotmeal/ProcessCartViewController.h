@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LoginPopupViewController.h"
 @interface ProcessCartViewController : UIViewController{
 }
 @property(assign,nonatomic)NSInteger total;
@@ -23,4 +24,5 @@
 @property(strong,nonatomic)NSString*nameArea;
 @property (retain, nonatomic) IBOutlet UITextView *txtNote;
 @property(strong,nonatomic)NSString*idArea;
+@property(strong,nonatomic)LoginPopupViewController*_loginPopupViewController;
 @end

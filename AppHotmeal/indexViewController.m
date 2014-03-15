@@ -7,10 +7,13 @@
 //
 
 #import "indexViewController.h"
+#import "UIViewController+MJPopupViewController.h"
 #import "ListingViewController.h"
-#import "areaListViewController.h"
+#import "AreaViewController.h"
 #import "selectCell.h"
-@interface indexViewController ()
+@interface indexViewController ()<AreaViewDelegate>{
+    
+}
 
 @end
 
@@ -19,10 +22,13 @@
 @synthesize selectArea;
 @synthesize nameArea;
 @synthesize idA;
+@synthesize _areaViewController;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"%@",self.nameArea);
+    self._areaViewController = [[AreaViewController alloc] initWithNibName:@"AreaViewController" bundle:nil];
+    self._areaViewController.delegate=self;
+    [self presentPopupViewController:self._areaViewController animationType:1];
 }
 -(NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
     return 1;
@@ -40,7 +46,15 @@
     }
     return cell;
 }
-
+-(void)setIdAndNameArea:(AreaViewController *)controller idarea:(NSString *)id namearea:(NSString *)name{
+    self.nameArea=name;
+    self.idA=id;
+    NSIndexPath *indexPath = [self.selectArea indexPathForSelectedRow];
+    selectCell *cell=[self.selectArea dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    [cell.nameArea setText:self.nameArea];
+    [self.selectArea reloadData];
+    [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -58,18 +72,18 @@
         ListingViewController *listingViewController= segue.destinationViewController;
         listingViewController.idArea = self.idA;
         listingViewController._nameArea=self.nameArea;
-    }else if([segue.identifier isEqualToString:@"notUsed"]){
-        areaListViewController *areaViewController= segue.destinationViewController;
-        areaViewController.idSeque = @"index";
     }
 }
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self presentPopupViewController:self._areaViewController animationType:1];
+}
 - (IBAction)btnNext:(id)sender {
     NSLog(@"%d",self.nameArea.length);
     if(self.nameArea.length!=0){
         [self performSegueWithIdentifier:@"idArea" sender:self];
     }else{
-        [self alert:@"Vui lòng chọn quận"];
+        [self presentPopupViewController:self._areaViewController animationType:1];
     }
 }
 -(void)alert:(NSString*)message{

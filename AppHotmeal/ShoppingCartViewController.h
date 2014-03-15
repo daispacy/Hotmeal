@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "PlaceDeliveryViewController.h"
+#import "PaymentViewController.h"
 #import "orderaddress.h"
 #import "loginViewController.h"
+#import "payment.h"
 @class ShoppingCartViewController;
 @protocol ShoppingCartViewContrllerDelegate <NSObject>
 -(NSArray*)getOrderAddress:(ShoppingCartViewController*)controller;
@@ -40,5 +42,11 @@
 - (IBAction)showPopupArea:(id)sender;
 @property(assign,nonatomic)NSInteger fee_delivery;
 @property(retain,nonatomic)PlaceDeliveryViewController*_placedeliveryviewcontroller;
+@property (retain, nonatomic) IBOutlet UIButton *btnThanhToan;
+@property (retain, nonatomic) IBOutlet UIButton *lblPaymentMethod;
 @property(strong,nonatomic)orderaddress*object;
+@property(retain,nonatomic)PaymentViewController*_paymentviewcontroller;
+- (IBAction)showPopupPayment:(id)sender;
+- (IBAction)thanhtoan:(id)sender;
+@property(nonatomic,strong)payment*paymentObject;
 @end
