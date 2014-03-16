@@ -7,6 +7,7 @@
 //
 
 #import "LoginPopupViewController.h"
+#import "UIViewController+MJPopupViewController.h"
 #import "user.h"
 #import "userManager.h"
 #import "userConnect.h"
@@ -19,7 +20,6 @@
 
 @implementation LoginPopupViewController
 @synthesize delegate;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -36,6 +36,7 @@
     _userManager.userConnect=[[userConnect alloc]init];
     _userManager.userConnect.delegate=_userManager;
     _userManager.delegate=self;
+   
 }
 -(void)getDataUser:(NSArray *)data{
     _user=data;
@@ -57,7 +58,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 - (void)dealloc {
     [_txtUsername release];
     [_txtPassword release];
@@ -68,5 +68,7 @@
 }
 
 - (IBAction)btnRegister:(id)sender {
+    //[self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
+    [self.delegate callRegister:self];
 }
 @end

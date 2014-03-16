@@ -7,11 +7,12 @@
 //
 
 #import "ProcessCartViewController.h"
+#import "RegisterViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "selectCell.h"
 #import "LoginPopupViewController.h"
 #import "UIViewController+MJPopupViewController.h"
-@interface ProcessCartViewController()<LoginPopupViewDelegate>{
+@interface ProcessCartViewController()<LoginPopupViewDelegate,RegisterViewDelegate>{
     
 }
 @end
@@ -31,12 +32,15 @@
 @synthesize nameArea;
 @synthesize txtNote;
 @synthesize _loginPopupViewController;
+@synthesize _registerViewController;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self._loginPopupViewController=[[LoginPopupViewController alloc] initWithNibName:@"LoginPopupViewController" bundle:nil];
     self._loginPopupViewController.delegate=self;
     [self presentPopupViewController:self._loginPopupViewController animationType:1];
+    self._registerViewController=[[RegisterViewController alloc] initWithNibName:@"RegisterViewController" bundle:nil];
+    self._registerViewController.delegate=self;
 	//display alert login
     [self initBorderTextView];
     //[self alert];
@@ -85,12 +89,23 @@
     NSLog(@"%@",data.address);
     [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
 }
+-(void)returnUserRegister:(RegisterViewController *)controller user:(user *)data{
+    self.txtUserName.text=data.name;
+    self.txtEmail.text=data.email;
+    self.txtFullName.text=data.fullname;
+    self.txtAddress.text=data.address;
+    NSLog(@"%@",data.address);
+    [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+-(void)callRegister:(LoginPopupViewController *)controller{
+    [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
+    [self presentPopupViewController:self._registerViewController animationType:1];
+}
 - (void)dealloc {
  
     [_txtAddress release];

@@ -14,6 +14,9 @@
     NSLog(@"chay vao day roi");
     [self.userConnect getUsers:user password:password];
 }
+-(void)registerUser:(NSString *)post{
+    [self.userConnect registerUsers:post];
+}
 -(void)getDataUser:(NSData *)data{
     NSError *error=nil;
     NSArray *estores=[userBuidler getDataUser:data error:&error];

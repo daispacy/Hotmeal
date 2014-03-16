@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "LoginPopupViewController.h"
+#import "RegisterViewController.h"
 @interface ProcessCartViewController : UIViewController{
 }
+
 @property(assign,nonatomic)NSInteger total;
 @property(strong,nonatomic)NSArray* ProductCart;
 @property (retain, nonatomic) IBOutlet UITextField *txtAddress;
@@ -25,4 +27,5 @@
 @property (retain, nonatomic) IBOutlet UITextView *txtNote;
 @property(strong,nonatomic)NSString*idArea;
 @property(strong,nonatomic)LoginPopupViewController*_loginPopupViewController;
+@property(strong,nonatomic)RegisterViewController*_registerViewController;
 @end

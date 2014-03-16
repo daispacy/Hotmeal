@@ -12,7 +12,7 @@
 +(NSArray*)getDataUser:(NSData *)data error:(NSError **)error{
     NSError*err=nil;
     NSDictionary *parseObject=[NSJSONSerialization JSONObjectWithData:data options:kNilOptions  error:&err];
-    NSLog(@"%@",parseObject);
+    NSLog(@"dang o user builder%@",parseObject);
     if(err!=nil){
         *error=err;
         return nil;
@@ -31,6 +31,7 @@
         [es setPhone:[parseObject objectForKey:@"phone"]];
         [es setArea_id:[[parseObject objectForKey:@"area_id"] doubleValue]];
         [es setError:[parseObject objectForKey:@"error"]];
+        [es setMessage:[parseObject objectForKey:@"message"]];
         [estores addObject:es];
     
     return estores;

@@ -14,4 +14,5 @@
 @property(strong,nonatomic)userConnect*userConnect;
 @property(strong,nonatomic)id<userManagerDelegate> delegate;
 -(void)receiveData:(NSString*)user password:(NSString*)password;
+-(void)registerUser:(NSString*)post;
 @end

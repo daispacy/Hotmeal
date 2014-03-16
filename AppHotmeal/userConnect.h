@@ -12,5 +12,5 @@
 @interface userConnect : NSObject
 @property(strong,nonatomic)id<userDelegate> delegate;
 -(void)getUsers:(NSString*)user password:(NSString*)password;
-
+-(void)registerUsers:(NSString*)postData;
 @end

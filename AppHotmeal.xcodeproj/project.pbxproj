@@ -11,6 +11,8 @@
 		8426D57318D422EC005D0899 /* AreaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8426D57118D422EB005D0899 /* AreaViewController.xib */; };
 		844330E918CEBFB4000A2368 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844330E818CEBFB4000A2368 /* QuartzCore.framework */; };
 		844330EA18CEBFFB000A2368 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A0BB3018C9DC90000767D7 /* CoreGraphics.framework */; };
+		847BE6E318D57E5D008E89CD /* AlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 847BE6E118D57E5D008E89CD /* AlertViewController.m */; };
+		847BE6E418D57E5D008E89CD /* AlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847BE6E218D57E5D008E89CD /* AlertViewController.xib */; };
 		8480CBC618D1A1B000865226 /* userBuidler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8480CBC518D1A1B000865226 /* userBuidler.m */; };
 		8480CBC918D1A1BC00865226 /* userConnect.m in Sources */ = {isa = PBXBuildFile; fileRef = 8480CBC818D1A1BC00865226 /* userConnect.m */; };
 		8480CBCC18D1A1CE00865226 /* userManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8480CBCB18D1A1CE00865226 /* userManager.m */; };
@@ -86,6 +88,9 @@
 		8426D57018D422EB005D0899 /* AreaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AreaViewController.m; sourceTree = "<group>"; };
 		8426D57118D422EB005D0899 /* AreaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AreaViewController.xib; sourceTree = "<group>"; };
 		844330E818CEBFB4000A2368 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		847BE6E018D57E5D008E89CD /* AlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertViewController.h; sourceTree = "<group>"; };
+		847BE6E118D57E5D008E89CD /* AlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertViewController.m; sourceTree = "<group>"; };
+		847BE6E218D57E5D008E89CD /* AlertViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertViewController.xib; sourceTree = "<group>"; };
 		8480CBC218D1A18200865226 /* userDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = userDelegate.h; sourceTree = "<group>"; };
 		8480CBC318D1A19A00865226 /* userManagerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = userManagerDelegate.h; sourceTree = "<group>"; };
 		8480CBC418D1A1B000865226 /* userBuidler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = userBuidler.h; sourceTree = "<group>"; };
@@ -524,6 +529,9 @@
 				84B3C1DA18D45A270017FA9E /* LoginPopupViewController.h */,
 				84B3C1DB18D45A270017FA9E /* LoginPopupViewController.m */,
 				84B3C1DC18D45A270017FA9E /* LoginPopupViewController.xib */,
+				847BE6E018D57E5D008E89CD /* AlertViewController.h */,
+				847BE6E118D57E5D008E89CD /* AlertViewController.m */,
+				847BE6E218D57E5D008E89CD /* AlertViewController.xib */,
 			);
 			name = PopupView;
 			sourceTree = "<group>";
@@ -602,6 +610,7 @@
 				84E1692818D44FDF003928D7 /* MainStoryboard.storyboard in Resources */,
 				84B3C1D918D459F70017FA9E /* RegisterViewController.xib in Resources */,
 				84B3C1DE18D45A270017FA9E /* LoginPopupViewController.xib in Resources */,
+				847BE6E418D57E5D008E89CD /* AlertViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -669,6 +678,7 @@
 				84E1692418D445B3003928D7 /* PaymentViewController.m in Sources */,
 				84B3C1D818D459F70017FA9E /* RegisterViewController.m in Sources */,
 				84B3C1DD18D45A270017FA9E /* LoginPopupViewController.m in Sources */,
+				847BE6E318D57E5D008E89CD /* AlertViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

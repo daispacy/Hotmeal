@@ -17,4 +17,5 @@
 @property(assign,nonatomic)NSInteger area_id;
 @property(strong,nonatomic)NSString*fullname;
 @property(strong,nonatomic)NSString* error;
+@property(strong,nonatomic)NSString*message;
 @end

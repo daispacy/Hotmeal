@@ -12,7 +12,6 @@
 @interface LoginPopupViewController : UIViewController{
     id<LoginPopupViewDelegate>delegate;
 }
-
 @property(assign,nonatomic)id<LoginPopupViewDelegate>delegate;
 @property (retain, nonatomic) IBOutlet UITextField *txtUsername;
 @property (retain, nonatomic) IBOutlet UITextField *txtPassword;
@@ -22,4 +21,5 @@
 @protocol LoginPopupViewDelegate<NSObject>
 @optional
 -(void)returnUser:(LoginPopupViewController*)controller user:(user*)data;
+-(void)callRegister:(LoginPopupViewController*)controller;
 @end
