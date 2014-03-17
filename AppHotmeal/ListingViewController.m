@@ -11,10 +11,10 @@
 #import "estoreManager.h"
 #import "estoreConnect.h"
 #import "EstoreCell.h"
-
+#import "staticConfig.h"
 
 @interface ListingViewController()<estoreManagerDelegate>{
-    NSArray*_estore;
+    NSMutableArray*_estore;
     estoreManager*_esManager;
 }
 
@@ -24,6 +24,12 @@
 @synthesize idArea;
 @synthesize idEstore;
 @synthesize _nameArea;
+@synthesize pages;
+@synthesize page;
+@synthesize footerLabel;
+@synthesize activityIndicator;
+@synthesize totalSize;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -38,29 +44,44 @@
     [super viewDidLoad];
     idEstore=[[NSMutableArray alloc]init];
 	_esManager=[[estoreManager alloc]init];
+    self.page=1;
+    _estore=[[NSMutableArray alloc]init];
     _esManager.esConnect=[[estoreConnect alloc]init];
     _esManager.esConnect.delegate=_esManager;
     _esManager.delegate=self;
-    [_esManager receiveData:idArea];
-    sleep(3);
+    [self setupTableViewFooter];
+    [_esManager receiveData:idArea page:self.page];
 }
 
 -(void)getData:(NSArray*)data{
-    NSSortDescriptor *sort=[NSSortDescriptor sortDescriptorWithKey:@"status" ascending:NO];
-    [data sortUsingDescriptors:[NSArray arrayWithObject:sort]];
-    _estore=data;
-    [self.tableView reloadData];
+    //NSSortDescriptor *sort=[NSSortDescriptor sortDescriptorWithKey:@"status" ascending:NO];
+    //[data sortUsingDescriptors:[NSArray arrayWithObject:sort]];
+            [_estore addObjectsFromArray:data];
+        estore *object=_estore[0];
+        self.pages=object.pages;
+    self.totalSize=object.total;
+    if(self.page==1){
+        [self.tableView reloadData];
+    }else{
+        [self fetchTable:_estore.count totalDisplay:self.page*15 results:data];
+    }
+    self.page++;
 }
 -(void)getDataFailed:(NSError *)error{
     NSLog(@"%@",error);
 }
 -(NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
-        return [_estore count];
+    NSLog(@"so luong _estore %d",_estore.count);
+        return _estore.count;
     //return 100;
+}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)theTableView{
+    return 1;
 }
 -(UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     EstoreCell *cell=[self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    estore *object=_estore[indexPath.row];
+    NSArray*Temp = _estore;
+    estore *object=Temp[indexPath.row];
     [idEstore addObject:object.id];
     [cell.name setText:object.name];
     if (object.status==1) {
@@ -71,15 +92,23 @@
         [cell.status setText:@"Close"];
     }
     [cell.open_hour setText:object.listime];
-    
     [cell.like setText:[NSString stringWithFormat:@"%d",object.like]];
     [cell.min_delivery setText:object.min_delivery];
     //set up image
+    cell.imgView.image = nil;
     NSString*url=[NSString stringWithFormat:@"http://hotmeal.vn/gallery/0/resources/a_%@",object.image];
-    NSURL * imageURL = [NSURL URLWithString:url];
-    NSData * imageData = [NSData dataWithContentsOfURL:imageURL];
-    UIImage * image = [UIImage imageWithData:imageData];
-    [cell.imgView setImage:image];
+    dispatch_async(kBgQueue, ^{
+        NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+        if (imgData) {
+            UIImage *image = [UIImage imageWithData:imgData];
+            if (image) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    //EstoreCell *updateCell=[self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+                        cell.imgView.image = image;
+                });
+            }
+        }
+    });
     return cell;
 }
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -105,5 +134,84 @@
 
 - (void)dealloc {
     [super dealloc];
+}
+
+#pragma mark - UIScrollViewDelegate Methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    // when reaching bottom, load a new page
+    if (scrollView.contentOffset.y == scrollView.contentSize.height - scrollView.bounds.size.height)
+    {
+        // ask next page only if we haven't reached last page
+        if (self.page<=self.pages) {
+            [self nextPage];
+        }else{
+            [self.activityIndicator stopAnimating];
+        }
+    }
+}
+
+-(void)nextPage{
+        [_esManager receiveData:idArea page:self.page];
+        [self.activityIndicator startAnimating];
+}
+
+- (void)setupTableViewFooter
+{
+    // set up label
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    footerView.backgroundColor = [UIColor clearColor];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    label.font = [UIFont boldSystemFontOfSize:16];
+    label.textColor = [UIColor lightGrayColor];
+    label.textAlignment = UITextAlignmentCenter;
+    
+    self.footerLabel = label;
+    [footerView addSubview:label];
+    
+    // set up activity indicator
+    UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    activityIndicatorView.center = CGPointMake(40, 22);
+    activityIndicatorView.hidesWhenStopped = YES;
+    
+    self.activityIndicator = activityIndicatorView;
+    [footerView addSubview:activityIndicatorView];
+    
+    self.tableView.tableFooterView = footerView;
+}
+
+- (void)updateTableViewFooter
+{
+    if (page != 0)
+    {
+        self.footerLabel.text = [NSString stringWithFormat:@"%d/%d Nhà hàng", [_estore count], self.totalSize];
+    } else
+    {
+        self.footerLabel.text = @"";
+    }
+    
+    [self.footerLabel setNeedsDisplay];
+}
+- (void)fetchTable:(NSInteger)totalResults totalDisplay:(NSInteger)total results:(NSArray*)results
+{
+    // update tableview footer
+    [self updateTableViewFooter];
+    [self.activityIndicator stopAnimating];
+    
+    // update tableview content
+    // easy way : call [tableView reloadData];
+    // nicer way : use insertRowsAtIndexPaths:withAnimation:
+    NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
+    NSInteger i = totalResults - total;
+    for(NSDictionary *result in results)
+    {
+        [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
+        i++;
+    }
+    
+    [self.tableView beginUpdates];
+    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView endUpdates];
 }
 @end

@@ -14,5 +14,5 @@
 @interface estoreManager : NSObject<estoreDelegate>
 @property(strong,nonatomic)estoreConnect*esConnect;
 @property(strong,nonatomic)id<estoreManagerDelegate> delegate;
--(void)receiveData:(NSString*)idArea;
+-(void)receiveData:(NSString*)idArea page:(NSInteger)page;
 @end

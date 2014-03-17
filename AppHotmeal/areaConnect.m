@@ -8,25 +8,13 @@
 
 #import "areaConnect.h"
 #import "areaDelegate.h"
-#define API @"87banhvantran"
-#define HOST @"http://hotmeal.vn/iosgate.php?"
-#define OP @"area"
+#import "staticConfig.h"
 
 @implementation areaConnect
 -(void)getArea{
-    NSString* urlString=[NSString stringWithFormat:@"%@apikey=%@&op=%@",HOST,API,OP];
-    NSLog(@"url: %@",urlString);
-    NSURL* url=[[NSURL alloc]initWithString:urlString];
-    NSURLRequest *request =[NSURLRequest requestWithURL:url];
-    [[NSURLConnection alloc]initWithRequest:request delegate:self];
-}
--(void)connection:(NSURLConnection*)connection didReceiveData:(NSData *)data{
-    //NSLog(@"lok get duoc data :%@",data);
-    [self.delegate getDataArea:data];
-}
--(void)connection:(NSURLConnection*)connection didFailWithError:(NSError *)error{
-    NSLog(@"loi roi");
-    [self.delegate getDataAreaFailed:error];
+    NSString* urlString=[NSString stringWithFormat:@"%@apikey=%@&op=%@",HOST,API,OPAREA];
+    NSData *jsonData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:urlString] encoding:NSUTF8StringEncoding error:nil] dataUsingEncoding:NSUTF8StringEncoding];
+    [self.delegate getDataArea:jsonData];
 }
 
 @end

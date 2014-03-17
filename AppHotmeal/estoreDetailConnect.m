@@ -8,23 +8,12 @@
 
 #import "estoreDetailConnect.h"
 #import "estoreDetailDelegate.h"
-#define API @"87banhvantran"
-#define HOST @"http://hotmeal.vn/iosgate.php?"
-#define OP @"estoredetail"
+#import "staticConfig.h"
+
 @implementation estoreDetailConnect
 -(void)getEstore:(NSString*)idEstore{
-    NSString* urlString=[NSString stringWithFormat:@"%@apikey=%@&op=%@&id=%@",HOST,API,OP,idEstore];
-    NSLog(@"url: %@",urlString);
-    NSURL* url=[[NSURL alloc]initWithString:urlString];
-    NSURLRequest *request =[NSURLRequest requestWithURL:url];
-    [[NSURLConnection alloc]initWithRequest:request delegate:self];
-}
--(void)connection:(NSURLConnection*)connection didReceiveData:(NSData *)data{
-    //NSLog(@"lok get duoc data :%@",data);
-    [self.delegate getData:data];
-}
--(void)connection:(NSURLConnection*)connection didFailWithError:(NSError *)error{
-    NSLog(@"loi roi");
-    [self.delegate getDataFailed:error];
+    NSString* urlString=[NSString stringWithFormat:@"%@apikey=%@&op=%@&id=%@",HOST,API,OPESTOREDETAIL,idEstore];
+    NSData *jsonData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:urlString] encoding:NSUTF8StringEncoding error:nil] dataUsingEncoding:NSUTF8StringEncoding];
+    [self.delegate getData:jsonData];
 }
 @end

@@ -11,6 +11,7 @@
 #import "ListingViewController.h"
 #import "AreaViewController.h"
 #import "selectCell.h"
+#import "staticConfig.h"
 @interface indexViewController ()<AreaViewDelegate>{
     
 }
@@ -28,7 +29,7 @@
     [super viewDidLoad];
     self._areaViewController = [[AreaViewController alloc] initWithNibName:@"AreaViewController" bundle:nil];
     self._areaViewController.delegate=self;
-    [self presentPopupViewController:self._areaViewController animationType:1];
+    [self presentPopupViewController:self._areaViewController animationType:ANIMATE];
 }
 -(NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
     return 1;
@@ -76,14 +77,14 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self presentPopupViewController:self._areaViewController animationType:1];
+    [self presentPopupViewController:self._areaViewController animationType:ANIMATE];
 }
 - (IBAction)btnNext:(id)sender {
     NSLog(@"%d",self.nameArea.length);
     if(self.nameArea.length!=0){
         [self performSegueWithIdentifier:@"idArea" sender:self];
     }else{
-        [self presentPopupViewController:self._areaViewController animationType:1];
+        [self presentPopupViewController:self._areaViewController animationType:ANIMATE];
     }
 }
 -(void)alert:(NSString*)message{

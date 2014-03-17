@@ -16,5 +16,6 @@
 @property(assign,nonatomic)NSInteger status;
 @property(strong,nonatomic)NSString* listime;
 @property(strong,nonatomic)NSString* min_delivery;
-//@property(strong,nonatomic)NSString* domain;
+@property(assign,nonatomic)NSInteger pages;
+@property(assign,nonatomic)NSInteger total;
 @end

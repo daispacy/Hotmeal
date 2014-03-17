@@ -13,6 +13,7 @@
     id<AreaViewDelegate>delegate;
 }
 @property(assign,nonatomic)id<AreaViewDelegate>delegate;
+@property (retain, nonatomic) IBOutlet UIActivityIndicatorView *loading;
 @property (retain, nonatomic) IBOutlet UITableView *listArea;
 @end
 @protocol AreaViewDelegate<NSObject>

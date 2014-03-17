@@ -11,6 +11,8 @@
 #import "paymentManager.h"
 #import "paymentConnect.h"
 #import "UIViewController+MJPopupViewController.h"
+#import "functions.h"
+
 @interface PaymentViewController ()<paymentManagerDelegate>{
     NSArray*_payment;
     paymentManager*_paymentManager;
@@ -56,17 +58,15 @@
     [data sortUsingDescriptors:[NSArray arrayWithObject:sort]];
     _payment=data;
     if(_payment.count<1){
-        [self alert:@"Quán chỉ giao đến khu vực hiện tại."];
+        [functions alert:@"Quán chỉ chấp nhận thanh toán trực tiếp" title:@"Chú ý" buttonTitle:@"OK" controller:self];
         [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
     }
     [self.tblPayment reloadData];
     
 }
--(void)alert:(NSString*)message{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Thông báo" message: message delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil]; [alert show]; [alert release];
-}
+
 -(void)getDataPaymentFailed:(NSError *)error{
-    [self alert:@"Lỗi nhận dữ liệu từ server."];
+    [functions alert:@"Connect to server Failed." title:@"" buttonTitle:@"OK" controller:self];
     [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -94,13 +94,7 @@
     payment*object =_payment[indexPath.row];
     [self.delegate setIdAndNamePayment:self payment:object];
 }
--(NSString*)convertToNumber:(NSInteger)value{
-    NSNumber *someNumber = [NSNumber numberWithDouble:value];
-    NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
-    [nf setNumberStyle:NSNumberFormatterDecimalStyle];
-    NSString *someString = [nf stringFromNumber:someNumber];
-    return someString;
-}
+
 
 - (void)didReceiveMemoryWarning
 {

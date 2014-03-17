@@ -7,26 +7,15 @@
 //
 
 #import "orderaddressConnect.h"
-
-#import "orderaddressConnect.h"
 #import "orderaddressDelegate.h"
-#define API @"87banhvantran"
-#define HOST @"http://hotmeal.vn/iosgate.php?"
-#define OP @"feedelivery"
+#import "staticConfig.h"
+
+
 @implementation orderaddressConnect
 -(void)getOrderAddress:(NSString *)idEstore idarea:(NSString *)idArea{
-    NSString* urlString=[NSString stringWithFormat:@"%@apikey=%@&op=%@&id=%@&ida=%@",HOST,API,OP,idEstore,idArea];
-    NSLog(@"url: %@",urlString);
-    NSURL* url=[[NSURL alloc]initWithString:urlString];
-    NSURLRequest *request =[NSURLRequest requestWithURL:url];
-    [[NSURLConnection alloc]initWithRequest:request delegate:self];
+    NSString* urlString=[NSString stringWithFormat:@"%@apikey=%@&op=%@&id=%@&ida=%@",HOST,API,OPFEEDELIVERY,idEstore,idArea];
+    NSData *jsonData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:urlString] encoding:NSUTF8StringEncoding error:nil] dataUsingEncoding:NSUTF8StringEncoding];
+    [self.delegate getDataOrderAddress:jsonData];
 }
--(void)connection:(NSURLConnection*)connection didReceiveData:(NSData *)data{
-    //NSLog(@"lok get duoc data :%@",data);
-    [self.delegate getDataOrderAddress:data];
-}
--(void)connection:(NSURLConnection*)connection didFailWithError:(NSError *)error{
-    NSLog(@"loi roi");
-    [self.delegate getDataOrderAddressFailed:error];
-}
+
 @end

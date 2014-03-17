@@ -12,6 +12,8 @@
 #import "selectCell.h"
 #import "LoginPopupViewController.h"
 #import "UIViewController+MJPopupViewController.h"
+#import "user.h"
+#import "staticConfig.h"
 @interface ProcessCartViewController()<LoginPopupViewDelegate,RegisterViewDelegate>{
     
 }
@@ -36,9 +38,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    User=[[user alloc]init];
     self._loginPopupViewController=[[LoginPopupViewController alloc] initWithNibName:@"LoginPopupViewController" bundle:nil];
     self._loginPopupViewController.delegate=self;
-    [self presentPopupViewController:self._loginPopupViewController animationType:1];
+    [self presentPopupViewController:self._loginPopupViewController animationType:ANIMATE];
     self._registerViewController=[[RegisterViewController alloc] initWithNibName:@"RegisterViewController" bundle:nil];
     self._registerViewController.delegate=self;
 	//display alert login
@@ -82,6 +85,7 @@
      */
 }
 -(void)returnUser:(LoginPopupViewController *)controller user:(user *)data{
+    User=data;
     self.txtUserName.text=data.name;
     self.txtEmail.text=data.email;
     self.txtFullName.text=data.fullname;
@@ -90,6 +94,7 @@
     [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
 }
 -(void)returnUserRegister:(RegisterViewController *)controller user:(user *)data{
+    User=data;
     self.txtUserName.text=data.name;
     self.txtEmail.text=data.email;
     self.txtFullName.text=data.fullname;
@@ -104,7 +109,7 @@
 }
 -(void)callRegister:(LoginPopupViewController *)controller{
     [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
-    [self presentPopupViewController:self._registerViewController animationType:1];
+    [self presentPopupViewController:self._registerViewController animationType:ANIMATE];
 }
 - (void)dealloc {
  
@@ -113,4 +118,9 @@
     [super dealloc];
 }
 
+- (IBAction)process:(id)sender {
+    if(!User.name){
+    [self presentPopupViewController:self._loginPopupViewController animationType:ANIMATE];
+    }
+}
 @end

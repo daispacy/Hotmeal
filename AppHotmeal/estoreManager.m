@@ -10,9 +10,9 @@
 #import "estoreConnect.h"
 
 @implementation estoreManager
--(void)receiveData:(NSString *)idArea{
+-(void)receiveData:(NSString *)idArea page:(NSInteger)page{
     NSLog(@"chay vao day roi");
-    [self.esConnect getEstore:idArea];
+    [self.esConnect getEstore:idArea page:page];
 }
 -(void)getData:(NSData *)data{
     NSError *error=nil;

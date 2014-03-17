@@ -54,6 +54,8 @@
 		84BA521818D14131009F71F7 /* ProcessCartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BA521718D14131009F71F7 /* ProcessCartViewController.m */; };
 		84BAAE5818D3E9A10053C641 /* PlaceDeliveryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BAAE5618D3E9A10053C641 /* PlaceDeliveryViewController.m */; };
 		84BAAE5918D3E9A10053C641 /* PlaceDeliveryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BAAE5718D3E9A10053C641 /* PlaceDeliveryViewController.xib */; };
+		84C0B62918D688B50063A876 /* staticConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C0B62818D688B50063A876 /* staticConfig.m */; };
+		84C0B62D18D68FD90063A876 /* functions.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C0B62C18D68FD90063A876 /* functions.m */; };
 		84DF408718CD4F2400DFC634 /* ProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DF408618CD4F2400DFC634 /* ProductCell.m */; };
 		84E1691718D4429A003928D7 /* payment.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E1691618D4429A003928D7 /* payment.m */; };
 		84E1691A18D442A8003928D7 /* paymentBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E1691918D442A8003928D7 /* paymentBuilder.m */; };
@@ -177,6 +179,10 @@
 		84BAAE5518D3E9A10053C641 /* PlaceDeliveryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceDeliveryViewController.h; sourceTree = "<group>"; };
 		84BAAE5618D3E9A10053C641 /* PlaceDeliveryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceDeliveryViewController.m; sourceTree = "<group>"; };
 		84BAAE5718D3E9A10053C641 /* PlaceDeliveryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceDeliveryViewController.xib; sourceTree = "<group>"; };
+		84C0B62718D688B50063A876 /* staticConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = staticConfig.h; sourceTree = "<group>"; };
+		84C0B62818D688B50063A876 /* staticConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = staticConfig.m; sourceTree = "<group>"; };
+		84C0B62B18D68FD90063A876 /* functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = functions.h; sourceTree = "<group>"; };
+		84C0B62C18D68FD90063A876 /* functions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = functions.m; sourceTree = "<group>"; };
 		84DF408518CD4F2400DFC634 /* ProductCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductCell.h; sourceTree = "<group>"; };
 		84DF408618CD4F2400DFC634 /* ProductCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductCell.m; sourceTree = "<group>"; };
 		84E1691318D44271003928D7 /* paymentDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = paymentDelegate.h; sourceTree = "<group>"; };
@@ -335,23 +341,24 @@
 		84A0BB3218C9DC90000767D7 /* AppHotmeal */ = {
 			isa = PBXGroup;
 			children = (
-				84E1692618D44FDF003928D7 /* MainStoryboard.storyboard */,
-				84E1691218D44252003928D7 /* PaymentMethod */,
-				84F6AE1E18D2F526004B7397 /* Library */,
-				84F6AE1818D2F0EF004B7397 /* PopupView */,
-				84F6AE0C18D2CF63004B7397 /* OrderAddress */,
-				8480CBC118D1A16B00865226 /* user */,
-				84BA521918D1413D009F71F7 /* Cell */,
-				84B1976718CDB16100AD07B8 /* cart */,
-				84B1976318CDAA4B00AD07B8 /* Controller */,
-				8497246918CADA5C0053D727 /* productCategory */,
-				8497245A18CAD90F0053D727 /* product */,
-				84A0BB5118C9DD8E000767D7 /* Detail */,
-				84A0BB5018C9DD86000767D7 /* Area */,
-				84A0BB4F18C9DD7E000767D7 /* Estore */,
 				84A0BB3B18C9DC90000767D7 /* indexAppDelegate.h */,
 				84A0BB3C18C9DC90000767D7 /* indexAppDelegate.m */,
+				84E1692618D44FDF003928D7 /* MainStoryboard.storyboard */,
+				84A0BB5018C9DD86000767D7 /* Area */,
+				84B1976718CDB16100AD07B8 /* cart */,
+				84BA521918D1413D009F71F7 /* Cell */,
+				84B1976318CDAA4B00AD07B8 /* Controller */,
+				84A0BB4F18C9DD7E000767D7 /* Estore */,
+				84A0BB5118C9DD8E000767D7 /* EstoreDetail */,
+				84C0B62A18D68F400063A876 /* Include */,
+				84F6AE1E18D2F526004B7397 /* Library */,
+				84F6AE0C18D2CF63004B7397 /* OrderAddress */,
+				84E1691218D44252003928D7 /* PaymentMethod */,
+				84F6AE1818D2F0EF004B7397 /* PopupView */,
+				8497245A18CAD90F0053D727 /* product */,
+				8497246918CADA5C0053D727 /* productCategory */,
 				84A0BB3318C9DC90000767D7 /* Supporting Files */,
+				8480CBC118D1A16B00865226 /* user */,
 			);
 			path = AppHotmeal;
 			sourceTree = "<group>";
@@ -404,7 +411,7 @@
 			name = Area;
 			sourceTree = "<group>";
 		};
-		84A0BB5118C9DD8E000767D7 /* Detail */ = {
+		84A0BB5118C9DD8E000767D7 /* EstoreDetail */ = {
 			isa = PBXGroup;
 			children = (
 				84FB8BA118CAB4F700C2C6FC /* estoreDetail.h */,
@@ -418,7 +425,7 @@
 				84FB8BAC18CAB5D700C2C6FC /* estoreDetailManager.h */,
 				84FB8BAD18CAB5D700C2C6FC /* estoreDetailManager.m */,
 			);
-			name = Detail;
+			name = EstoreDetail;
 			sourceTree = "<group>";
 		};
 		84B1976318CDAA4B00AD07B8 /* Controller */ = {
@@ -472,6 +479,17 @@
 				84DF408518CD4F2400DFC634 /* ProductCell.h */,
 			);
 			name = Cell;
+			sourceTree = "<group>";
+		};
+		84C0B62A18D68F400063A876 /* Include */ = {
+			isa = PBXGroup;
+			children = (
+				84C0B62718D688B50063A876 /* staticConfig.h */,
+				84C0B62818D688B50063A876 /* staticConfig.m */,
+				84C0B62B18D68FD90063A876 /* functions.h */,
+				84C0B62C18D68FD90063A876 /* functions.m */,
+			);
+			name = Include;
 			sourceTree = "<group>";
 		};
 		84E1691218D44252003928D7 /* PaymentMethod */ = {
@@ -679,6 +697,8 @@
 				84B3C1D818D459F70017FA9E /* RegisterViewController.m in Sources */,
 				84B3C1DD18D45A270017FA9E /* LoginPopupViewController.m in Sources */,
 				847BE6E318D57E5D008E89CD /* AlertViewController.m in Sources */,
+				84C0B62918D688B50063A876 /* staticConfig.m in Sources */,
+				84C0B62D18D68FD90063A876 /* functions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

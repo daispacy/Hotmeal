@@ -12,4 +12,9 @@
 @property(nonatomic,strong)NSString* idArea;
 @property(nonatomic,strong)NSString*_nameArea;
 @property(nonatomic,strong)NSMutableArray* idEstore;
+@property(nonatomic,assign)NSInteger pages;
+@property(nonatomic,assign)NSInteger page;
+@property (nonatomic, strong) UILabel *footerLabel;
+@property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
+@property(assign,nonatomic)NSInteger totalSize;
 @end

@@ -10,6 +10,8 @@
 #import "area.h"
 #import "areaManager.h"
 #import "areaConnect.h"
+#import "staticConfig.h"
+
 @interface AreaViewController ()<areaManagerDelegate>{
     NSArray*_area;
     areaManager*_areaManager;
@@ -20,6 +22,7 @@
 @implementation AreaViewController
 @synthesize delegate;
 @synthesize listArea;
+@synthesize loading;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -37,6 +40,21 @@
     _areaManager.esConnect.delegate=_areaManager;
     _areaManager.delegate=self;
     [_areaManager receiveDataArea];
+    [loading startAnimating];
+    loading.hidesWhenStopped = YES;
+    NSStringEncoding *encoding = NULL;
+    dispatch_queue_t queue = dispatch_get_global_queue(
+                                                       DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
+        NSString* urlString=[NSString stringWithFormat:@"%@apikey=%@&op=%@",HOST,API,OPAREA];
+        NSLog(@"url: %@",urlString);
+        NSURL* url=[[NSURL alloc]initWithString:urlString];
+        //Load the json on another thread
+        NSString *jsonreturn = [[NSString alloc] initWithContentsOfURL:url usedEncoding:encoding error:NULL];
+        [jsonreturn release];
+        //When json is loaded stop the indicator
+        [loading performSelectorOnMainThread:@selector(stopAnimating) withObject:nil waitUntilDone:YES];
+    });
 }
 -(void)getDataArea:(NSArray*)data{
     
@@ -79,6 +97,7 @@
 
 - (void)dealloc {
     [listArea release];
+    [loading release];
     [super dealloc];
 }
 @end

@@ -12,7 +12,7 @@
 +(NSArray*)getData:(NSData *)data error:(NSError **)error{
     NSError*err=nil;
     NSDictionary *parseObject=[NSJSONSerialization JSONObjectWithData:data options:kNilOptions  error:&err];
-    NSLog(@"%@",parseObject);
+   // NSLog(@"%@",parseObject);
     if(err!=nil){
         *error=err;
         return nil;
@@ -26,12 +26,14 @@
         [es setImage:[[rs objectForKey:@"image"]stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         [es setId:[rs objectForKey:@"id"]];
         [es setName:[rs objectForKey:@"name"]];
+        [es setPages:[[rs objectForKey:@"pages"] doubleValue]];
         NSString* like = [rs objectForKey:@"like"];
         [es setLike:[like doubleValue]];
         [es setListime:[rs objectForKey:@"listime"]];
         NSString* status = [rs objectForKey:@"status"];
         [es setStatus:[status doubleValue]];
         [es setMin_delivery:[rs objectForKey:@"mini_delivery"]];
+        [es setTotal:[[rs objectForKey:@"total"] doubleValue]];
         [estores addObject:es];
     }
     return estores;

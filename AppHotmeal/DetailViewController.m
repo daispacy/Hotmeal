@@ -22,6 +22,9 @@
 #import "ProductCell.h"
 #import "cart.h"
 #import <QuartzCore/QuartzCore.h>
+#import "functions.h"
+#import "staticConfig.h"
+
 @interface DetailViewController()<estoreDetailManagerDelegate,productManagerDelegate,orderaddressManagerDelegate> {
     NSArray*_estore;
     NSArray*_proCate,*_product,*_orderaddress;
@@ -92,10 +95,10 @@
     
     ShoppingCartViewController *svc = [self.tabBarController.viewControllers objectAtIndex:1];
     svc.delegate = self;
-    sleep(3);
+
    }
 -(NSMutableArray*)getProduct:(ShoppingCartViewController *)controller{
-    NSLog(@"delegate called");
+    NSLog(@"product in CArt truoc khi gui %@",self.productInCart);
     return self.productInCart;
 }
 -(NSInteger)getTotalCart:(ShoppingCartViewController *)controller{
@@ -114,7 +117,6 @@
     return self.idEstore;
 }
 -(void)displayData{
-     NSLog(@"chay vao method customize");
     estoreDetail *object=_estore[0];
     //set up image
     NSString*url=[NSString stringWithFormat:@"http://hotmeal.vn/gallery/0/resources/l_%@",object.image];
@@ -171,30 +173,33 @@
 -(UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
 	    ProductCell *cell=[self.productView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-  
-		//cell = [[[NSBundle mainBundle] loadNibNamed:@"Cell" owner:self options:nil] objectAtIndex:0];
-		//UIButton *btn = (UIButton*)[cell viewWithTag:1];
+
        [cell.btn viewWithTag:1];
     [cell.btn addTarget:self action:@selector(CartTapped:) forControlEvents:UIControlEventTouchUpInside];
     product *object=_product[indexPath.row];
     //[idEstore addObject:object.id];
     [cell.nameProduct setText:object.name];
-    NSNumber *someNumber = [NSNumber numberWithDouble:[object.price doubleValue]];
-    
-    NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
-    [nf setNumberStyle:NSNumberFormatterDecimalStyle];
-    NSString *someString = [nf stringFromNumber:someNumber];
     if(status==0){
         [cell.btn setHidden:TRUE];
     }
-    [cell.price setText:[NSString stringWithFormat:@"%@ VND",someString]];
+    [cell.price setText:[NSString stringWithFormat:@"%@ VND",[functions convertFromNumberToString:[object.price doubleValue]]]];
+    
     //set up image
+    cell.imageProduct.image = nil;
     NSString*url=[NSString stringWithFormat:@"http://hotmeal.vn/uploads/%@/products/a_%@",object.store_id,object.image];
-    //NSLog(@"url: %@",object.image);
-    NSURL * imageURL = [NSURL URLWithString:url];
-    NSData * imageData = [NSData dataWithContentsOfURL:imageURL];
-    UIImage * image = [UIImage imageWithData:imageData];
-    [cell.imageProduct setImage:image];
+    dispatch_async(kBgQueue, ^{
+        NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+        if (imgData) {
+            UIImage *image = [UIImage imageWithData:imgData];
+            if (image) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    //EstoreCell *updateCell=[self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+                    cell.imageProduct.image = image;
+                });
+            }
+        }
+    });
+
 	[cell.btn setTitle:[NSString stringWithFormat:@"%i",indexPath.row] forState:UIControlStateDisabled];
     return cell;
 }
@@ -323,7 +328,6 @@
 }
 - (void)dealloc {
     [productView release];
-    
     [super dealloc];
 }
 

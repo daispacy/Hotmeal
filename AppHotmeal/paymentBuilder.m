@@ -17,7 +17,7 @@
         *error=err;
         return nil;
     }
-    // NSArray *results = [parseObject allValues];
+    //NSArray *results = [parseObject allValues];
     //NSLog(@"Count %d", parseObject.count);
     //NSLog(@"%@",parseObject);
     NSMutableArray *estores=[[NSMutableArray alloc]init];
@@ -26,6 +26,7 @@
         [es setName:[rs objectForKey:@"name"]];
         [es setId:[rs objectForKey:@"Id"]];
         [es setFee:[[rs objectForKey:@"fee"] doubleValue]];
+        [es setPosition:[[rs objectForKey:@"position"]doubleValue]];
         [estores addObject:es];
     }
     return estores;

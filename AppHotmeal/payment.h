@@ -12,4 +12,5 @@
 @property(strong,nonatomic)NSString*id;
 @property(strong,nonatomic)NSString*name;
 @property(assign,nonatomic)NSInteger fee;
+@property(assign,nonatomic)NSInteger position;
 @end

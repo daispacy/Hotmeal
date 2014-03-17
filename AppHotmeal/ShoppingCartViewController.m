@@ -18,6 +18,8 @@
 #import "PlaceDeliveryViewController.h"
 #import "PaymentViewController.h"
 #import "payment.h"
+#import "staticConfig.h"
+#import "functions.h"
 @interface ShoppingCartViewController()<orderaddressManagerDelegate,TimePickerViewDelegate,PlaceDeliveryViewDelegate,PaymentViewDelegate>{
     NSArray*product;
     orderaddressManager*_odManager;
@@ -71,14 +73,15 @@
     //get variables from detailviewcontroller
     self.totalCart=[self.delegate getTotalCart:self];
     self.cartArray=[self.delegate getProduct:self];
+    
     self.object = [self.delegate getOrderAddress:self][0];
     if(self.object.free_delivery <self.totalCart){
         self.fee_delivery=object.price;
     }
     self.totalCart +=self.fee_delivery;
     [self.lblNameArea setTitle:[NSString stringWithFormat:@"%@ (%@)",[self.delegate getNameArea:self],self.object.times] forState:UIControlStateNormal];
-    [self.txtTotalCart setText:[NSString stringWithFormat:@"%@ VND",[self convertToNumber:self.totalCart]]];
-    self.lblFeeDelivery.text=[NSString stringWithFormat:@"%@ VND",[self convertToNumber:self.fee_delivery]];
+    [self.txtTotalCart setText:[NSString stringWithFormat:@"%@ VND",[functions convertFromNumberToString:self.totalCart]]];
+    self.lblFeeDelivery.text=[NSString stringWithFormat:@"%@ VND",[functions convertFromNumberToString:self.fee_delivery]];
     NSLog(@"will appear");
     [self.cartView reloadData];
 }
@@ -97,8 +100,8 @@
     self.totalCart=[self.delegate getTotalCart:self];
     self.totalCart +=self.fee_delivery;
     [self.lblNameArea setTitle:[NSString stringWithFormat:@"%@ (%@)",self.object.name,self.object.times] forState:UIControlStateNormal];
-    self.lblFeeDelivery.text=[NSString stringWithFormat:@"%@ VND",[self convertToNumber:self.fee_delivery]];
-    [self.txtTotalCart setText:[NSString stringWithFormat:@"%@ VND",[self convertToNumber:self.totalCart]]];
+    self.lblFeeDelivery.text=[NSString stringWithFormat:@"%@ VND",[functions convertFromNumberToString:self.fee_delivery]];
+    [self.txtTotalCart setText:[NSString stringWithFormat:@"%@ VND",[functions convertFromNumberToString:self.totalCart]]];
     NSLog(@"chay vao roi ma %@",od.name);
     [self.cartView reloadData];
     [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
@@ -120,14 +123,6 @@
 //end delegate
 
 
-//---convert from interger to string with format
--(NSString*)convertToNumber:(NSInteger)value{
-    NSNumber *someNumber = [NSNumber numberWithDouble:value];
-    NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
-    [nf setNumberStyle:NSNumberFormatterDecimalStyle];
-    NSString *someString = [nf stringFromNumber:someNumber];
-    return someString;
-}
 -(void)getDataOrderAddress:(NSArray *)data{
     _orderaddress=data;
 }
@@ -138,19 +133,10 @@
 //----Get time from class timepickerviewcontroller
 -(void)getTime:(TimePickerViewController *)controller date:(NSDate *)date{
     
-    [self.lblTime setTitle:[self convertDateToString:date] forState:UIControlStateNormal];
+    [self.lblTime setTitle:[functions convertDateToString:date] forState:UIControlStateNormal];
 }
 
--(NSString*)convertDateToString:(NSDate*)date{
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    
-    [dateFormatter setDateFormat:@"HH:mm 'ngày' yyyy-MM-dd"];
-    
-    NSString *formattedDateString = [dateFormatter stringFromDate:date];
-    
-    NSLog(@"formattedDateString: %@", formattedDateString);
-    return formattedDateString;
-}
+
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
@@ -169,8 +155,8 @@
     CartCell *cell=[tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     cart *objectCart = [self.cartArray objectAtIndex:indexPath.row];
     [cell.quantity addTarget:self action:@selector(checkPrice:) forControlEvents:UIControlEventEditingChanged];
-    cell.nameProduct.text=object.name;
-    [cell.price setText:[NSString stringWithFormat:@"%@ VND",[self convertToNumber:objectCart.total]]];
+    cell.nameProduct.text=objectCart.name;
+    [cell.price setText:[NSString stringWithFormat:@"%@ VND",[functions convertFromNumberToString:objectCart.total]]];
     cell.quantity.text=[NSString stringWithFormat:@"%d",objectCart.quantity];
     return cell;
 }
@@ -205,13 +191,13 @@
 - (IBAction)showPopupPicker:(id)sender {
     TimePickerViewController *timeViewController = [[TimePickerViewController alloc] initWithNibName:@"TimePickerViewController" bundle:nil];
     timeViewController.delegate=self;
-    [self presentPopupViewController:timeViewController animationType:1];
+    [self presentPopupViewController:timeViewController animationType:ANIMATE];
 }
 - (IBAction)showPopupArea:(id)sender {
-    [self presentPopupViewController:self._placedeliveryviewcontroller animationType:1];
+    [self presentPopupViewController:self._placedeliveryviewcontroller animationType:ANIMATE];
 }
 - (IBAction)showPopupPayment:(id)sender {
-    [self presentPopupViewController:self._paymentviewcontroller animationType:1];
+    [self presentPopupViewController:self._paymentviewcontroller animationType:ANIMATE];
 }
 
 - (IBAction)thanhtoan:(id)sender {

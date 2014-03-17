@@ -8,23 +8,13 @@
 
 #import "productCategoryConnect.h"
 #import "productCategoryDelegate.h"
-#define API @"87banhvantran"
-#define HOST @"http://hotmeal.vn/iosgate.php?"
-#define OP @"productcategories"
+#import "staticConfig.h"
+
 @implementation productCategoryConnect
 -(void)getProductCategories:(NSString *)idEstore{
-    NSString* urlString=[NSString stringWithFormat:@"%@apikey=%@&op=%@&id=%@",HOST,API,OP,idEstore];
-    NSLog(@"url: %@",urlString);
-    NSURL* url=[[NSURL alloc]initWithString:urlString];
-    NSURLRequest *request =[NSURLRequest requestWithURL:url];
-    [[NSURLConnection alloc]initWithRequest:request delegate:self];
+    NSString* urlString=[NSString stringWithFormat:@"%@apikey=%@&op=%@&id=%@",HOST,API,OPPRODUCTCATEGORIES,idEstore];
+    NSData *jsonData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:urlString] encoding:NSUTF8StringEncoding error:nil] dataUsingEncoding:NSUTF8StringEncoding];
+    [self.delegate getProductCate:jsonData];
 }
--(void)connection:(NSURLConnection*)connection didReceiveData:(NSData *)data{
-    //NSLog(@"lok get duoc data :%@",data);
-    [self.delegate getProductCate:data];
-}
--(void)connection:(NSURLConnection*)connection didFailWithError:(NSError *)error{
-    NSLog(@"loi roi");
-    [self.delegate getProductCateFailed:error];
-}
+
 @end

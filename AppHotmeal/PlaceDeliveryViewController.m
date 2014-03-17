@@ -11,6 +11,7 @@
 #import "orderaddress.h"
 #import "orderaddressManager.h"
 #import "orderaddressConnect.h"
+#import "functions.h"
 @interface PlaceDeliveryViewController ()<orderaddressManagerDelegate>{
     NSArray*_orderaddress;
     orderaddressManager*_odManager;
@@ -58,17 +59,15 @@
     [data sortUsingDescriptors:[NSArray arrayWithObject:sort]];
     _orderaddress=data;
     if(_orderaddress.count<1){
-        [self alert:@"Quán chỉ giao đến khu vực hiện tại."];
+        [functions alert:@"Quán chỉ giao đến khu vực hiện tại." title:@"Chú ý" buttonTitle:@"OK" controller:self];
         [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
     }
     [self.tableArea reloadData];
     
 }
--(void)alert:(NSString*)message{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Thông báo" message: message delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil]; [alert show]; [alert release];
-}
+
 -(void)getDataOrderAddressFailed:(NSError *)error{
-    [self alert:@"Lỗi nhận dữ liệu từ server."];
+    [functions alert:@"Lỗi kết nối server." title:@"Lỗi" buttonTitle:@"OK" controller:self];
     [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -88,7 +87,7 @@
     }
     cell.textLabel.textAlignment=UITextAlignmentRight;
      cell.textLabel.font = [UIFont systemFontOfSize:12.0];
-    [cell.textLabel setText:[NSString stringWithFormat:@"%@ (%@) %@ VND",object.name,object.times,[self convertToNumber:object.price]]];
+    [cell.textLabel setText:[NSString stringWithFormat:@"%@ (%@) %@ VND",object.name,object.times,[functions convertFromNumberToString:object.price]]];
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -96,13 +95,7 @@
     orderaddress*object =_orderaddress[indexPath.row];
     [self.delegate setArrayOrderAddress:self orderaddress:object];
 }
--(NSString*)convertToNumber:(NSInteger)value{
-    NSNumber *someNumber = [NSNumber numberWithDouble:value];
-    NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
-    [nf setNumberStyle:NSNumberFormatterDecimalStyle];
-    NSString *someString = [nf stringFromNumber:someNumber];
-    return someString;
-}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

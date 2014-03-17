@@ -8,17 +8,13 @@
 
 #import "userConnect.h"
 #import "userDelegate.h"
-#define API @"87banhvantran"
-#define HOST @"http://hotmeal.vn/iosgate.php?"
-#define OP @"login"
-#define OPREGISTER @"register"
+#import "staticConfig.h"
+
 @implementation userConnect
 -(void)getUsers:user password:(NSString *)password{
-    NSString* urlString=[NSString stringWithFormat:@"%@apikey=%@&op=%@&user=%@&password=%@",HOST,API,OP,user,password];
-    NSLog(@"url: %@",urlString);
-    NSURL* url=[[NSURL alloc]initWithString:urlString];
-    NSURLRequest *request =[NSURLRequest requestWithURL:url];
-    [[NSURLConnection alloc]initWithRequest:request delegate:self];
+    NSString* urlString=[NSString stringWithFormat:@"%@apikey=%@&op=%@&user=%@&password=%@",HOST,API,OPLOGIN,user,password];
+    NSData *jsonData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:urlString] encoding:NSUTF8StringEncoding error:nil] dataUsingEncoding:NSUTF8StringEncoding];
+    [self.delegate getDataUser:jsonData];
 }
 -(void)registerUsers:(NSString *)post{
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
