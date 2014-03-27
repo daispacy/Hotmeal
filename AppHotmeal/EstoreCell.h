@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface EstoreCell : UITableViewCell
-@property (retain, nonatomic) IBOutlet UIImageView *imgView;
-@property (retain, nonatomic) IBOutlet UILabel *name;
-@property (retain, nonatomic) IBOutlet UILabel *open_hour;
-@property (retain, nonatomic) IBOutlet UILabel *status;
-@property (retain, nonatomic) IBOutlet UILabel *min_delivery;
-@property (retain, nonatomic) IBOutlet UILabel *like;
+@property (strong, nonatomic) IBOutlet UIImageView *imgView;
+@property (strong, nonatomic) IBOutlet UILabel *name;
+@property (strong, nonatomic) IBOutlet UILabel *open_hour;
+@property (strong, nonatomic) IBOutlet UILabel *status;
+@property (strong, nonatomic) IBOutlet UILabel *min_delivery;
+@property (strong, nonatomic) IBOutlet UILabel *like;
 
 @end

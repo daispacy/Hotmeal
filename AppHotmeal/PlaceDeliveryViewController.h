@@ -10,10 +10,10 @@
 #import "orderaddress.h"
 @protocol PlaceDeliveryViewDelegate;
 @interface PlaceDeliveryViewController : UIViewController{
-    id<PlaceDeliveryViewDelegate>delegate;
+    id<PlaceDeliveryViewDelegate>__weak delegate;
 }
-@property(assign,nonatomic)id<PlaceDeliveryViewDelegate>delegate;
-@property (retain, nonatomic) IBOutlet UITableView *tableArea;
+@property(weak,nonatomic)id<PlaceDeliveryViewDelegate>delegate;
+@property (strong, nonatomic) IBOutlet UITableView *tableArea;
 @property(strong,nonatomic)NSString*idEstore;
 @end
 @protocol PlaceDeliveryViewDelegate<NSObject>

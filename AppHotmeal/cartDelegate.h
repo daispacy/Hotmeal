@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol cart <NSObject>
-
+@protocol cartDelegate <NSObject>
+-(void)getDataCart:(NSData*)data;
+-(void)getDataCartFailed:(NSError*)error;
 @end

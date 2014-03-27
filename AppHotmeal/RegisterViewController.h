@@ -12,24 +12,39 @@
 @protocol RegisterViewDelegate;
 
 @interface RegisterViewController : UIViewController{
-    id<RegisterViewDelegate>delegate;
+    id<RegisterViewDelegate>__weak delegate;
 }
+@property(weak,nonatomic)id<RegisterViewDelegate>delegate;
+
+@property (strong, nonatomic) IBOutlet UITextField *txtpassword;
+@property (strong, nonatomic) IBOutlet UITextField *txtrepassword;
+@property (strong, nonatomic) IBOutlet UITextField *txtemail;
+@property (strong, nonatomic) IBOutlet UITextField *txtaddress;
+@property (strong, nonatomic) IBOutlet UITextField *txtphone;
+@property (strong, nonatomic) IBOutlet UITextField *txtfullname;
+
+
+@property(strong,nonatomic)AlertViewController*_alertViewController;
+
+
+- (IBAction)checkFullName:(id)sender;
 - (IBAction)checkEmail:(id)sender;
 - (IBAction)checkPassword:(id)sender;
-@property(assign,nonatomic)id<RegisterViewDelegate>delegate;
-@property (retain, nonatomic) IBOutlet UITextField *txtpassword;
-@property (retain, nonatomic) IBOutlet UITextField *txtrepassword;
-@property (retain, nonatomic) IBOutlet UITextField *txtemail;
-@property (retain, nonatomic) IBOutlet UITextField *txtaddress;
 - (IBAction)process:(id)sender;
-@property (retain, nonatomic) IBOutlet UITextField *txtphone;
-@property (retain, nonatomic) IBOutlet UITextField *txtfullname;
-@property(strong,nonatomic)AlertViewController*_alertViewController;
-- (IBAction)checkAddress:(id)sender;
-@property(assign,nonatomic)NSInteger control;
 - (IBAction)checkPhone:(id)sender;
+- (IBAction)checkAddress:(id)sender;
+
+
+@property(assign,nonatomic)BOOL email;
+@property(assign,nonatomic)BOOL retypepassword;
+@property(assign,nonatomic)BOOL address;
+@property(assign,nonatomic)BOOL phone;
+@property(assign,nonatomic)BOOL fullname;
 @property(strong,nonatomic)NSString*message;
+
 @end
+
+
 @protocol RegisterViewDelegate<NSObject>
 @optional
 -(void)returnUserRegister:(RegisterViewController*)controller user:(user*)data;

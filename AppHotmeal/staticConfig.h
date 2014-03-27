@@ -22,11 +22,14 @@ static const int ANIMATE=3;
 #define OPORDER @"order"
 #define OPPRODUCTCATEGORIES @"productcategories"
 #define OPESTOREDETAIL @"estoredetail"
+#define OPESTORECATEGORIES @"estorecategories"
 #define OPAREA @"area"
 #define OPLISTING @"listing"
 #define OPPRODUCTS @"products"
 #define OPREGISTER @"register"
 #define OPREGISTER @"register"
+#define DATABASE @"hotmeal.sqlite"
+#define URLPATHIMGESTORE @"http://hotmeal.vn/gallery/0/resources/a_"
 
 @interface staticConfig : NSObject
 

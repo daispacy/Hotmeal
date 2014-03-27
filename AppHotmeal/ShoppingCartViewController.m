@@ -7,7 +7,7 @@
 //
 
 #import "ShoppingCartViewController.h"
-#import "loginViewController.h"
+#import "ProcessCartViewController.h"
 #import "orderaddress.h"
 #import "orderaddressManager.h"
 #import "orderaddressConnect.h"
@@ -20,6 +20,7 @@
 #import "payment.h"
 #import "staticConfig.h"
 #import "functions.h"
+
 @interface ShoppingCartViewController()<orderaddressManagerDelegate,TimePickerViewDelegate,PlaceDeliveryViewDelegate,PaymentViewDelegate>{
     NSArray*product;
     orderaddressManager*_odManager;
@@ -38,9 +39,12 @@
 @synthesize idArea;
 @synthesize idStore;
 @synthesize fee_delivery;
-@synthesize object;
+@synthesize objectOrderAddress;
 @synthesize paymentObject;
 @synthesize _paymentviewcontroller;
+@synthesize time_delivery;
+@synthesize vat;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -54,18 +58,17 @@
 {
     [super viewDidLoad];
     self.paymentObject=[[payment alloc]init];
-    self.object=[[orderaddress alloc]init];
+    self.objectOrderAddress=[[orderaddress alloc]init];
     self.cartArray=[[NSMutableArray alloc]init];
     self.fee_delivery=0;
     self._placedeliveryviewcontroller = [[PlaceDeliveryViewController alloc] initWithNibName:@"PlaceDeliveryViewController" bundle:nil];
     self._paymentviewcontroller=[[PaymentViewController alloc] initWithNibName:@"PaymentViewController" bundle:nil];
     self._paymentviewcontroller.delegate=self;
     self._placedeliveryviewcontroller.delegate=self;
-    NSLog(@"did load");
+    //[self.cartView reloadData];
 }
 -(void)viewDidAppear:(BOOL)animated{
     //get variables from detailviewcontroller
-    
     [self.cartView reloadData];
     
 }
@@ -73,36 +76,72 @@
     //get variables from detailviewcontroller
     self.totalCart=[self.delegate getTotalCart:self];
     self.cartArray=[self.delegate getProduct:self];
-    
-    self.object = [self.delegate getOrderAddress:self][0];
-    if(self.object.free_delivery <self.totalCart){
-        self.fee_delivery=object.price;
+    self.vat=[self.delegate getVat:self];
+    NSLog(@"vat cua estore: %d",self.vat);
+    self.objectOrderAddress = [self.delegate getOrderAddress:self][0];
+    if(self.objectOrderAddress.free_delivery <self.totalCart){
+        self.fee_delivery=objectOrderAddress.price;
     }
     self.totalCart +=self.fee_delivery;
-    [self.lblNameArea setTitle:[NSString stringWithFormat:@"%@ (%@)",[self.delegate getNameArea:self],self.object.times] forState:UIControlStateNormal];
+    [self.lblNameArea setTitle:[NSString stringWithFormat:@"%@ (%@)",[self.delegate getNameArea:self],self.objectOrderAddress.times] forState:UIControlStateNormal];
     [self.txtTotalCart setText:[NSString stringWithFormat:@"%@ VND",[functions convertFromNumberToString:self.totalCart]]];
     self.lblFeeDelivery.text=[NSString stringWithFormat:@"%@ VND",[functions convertFromNumberToString:self.fee_delivery]];
-    NSLog(@"will appear");
+    
     [self.cartView reloadData];
 }
 
+- (void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.cartView reloadData];
+}
+
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        //remove the deleted object from your data source.
+        NSUInteger row = [indexPath row];
+        NSUInteger count = [self.cartArray count];
+        if (row < count) {
+            [self.cartArray removeObjectAtIndex:row];
+        }
+    }
+    [self reloadBadgeNumber];
+    [self.cartView reloadData];
+}
+- (void)reloadBadgeNumber {
+    if([self.cartArray count]) {
+        [[self.tabBarController.tabBar.items objectAtIndex:1] setBadgeValue:[NSString stringWithFormat:@"%i",self.cartArray.count]];
+	} else {
+        [[self.tabBarController.tabBar.items objectAtIndex:1] setBadgeValue:nil];
+	}
+}
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSUInteger row = [indexPath row];
+    NSUInteger count = [self.cartArray count];
+    
+    if (row < count) {
+        return UITableViewCellEditingStyleDelete;
+    } else {
+        return UITableViewCellEditingStyleNone;
+    }
+}
+
+
 //delegate from popupPlaceDeliveryViewController
 -(NSString*)getIdEstore:(PlaceDeliveryViewController *)controller{
-    NSLog(@"nhan id store from shopingCart contrller");
     return [self.delegate getIdEstore1:self];
     
 }
 -(void)setArrayOrderAddress:(PlaceDeliveryViewController *)controller orderaddress:(orderaddress *)od{
-    self.object = od;
-    if(self.object.free_delivery <self.totalCart){
-        self.fee_delivery=object.price;
+    self.objectOrderAddress = od;
+    if(self.objectOrderAddress.free_delivery <self.totalCart){
+        self.fee_delivery=objectOrderAddress.price;
     }
     self.totalCart=[self.delegate getTotalCart:self];
     self.totalCart +=self.fee_delivery;
-    [self.lblNameArea setTitle:[NSString stringWithFormat:@"%@ (%@)",self.object.name,self.object.times] forState:UIControlStateNormal];
+    [self.lblNameArea setTitle:[NSString stringWithFormat:@"%@ (%@)",self.objectOrderAddress.name,self.objectOrderAddress.times] forState:UIControlStateNormal];
     self.lblFeeDelivery.text=[NSString stringWithFormat:@"%@ VND",[functions convertFromNumberToString:self.fee_delivery]];
     [self.txtTotalCart setText:[NSString stringWithFormat:@"%@ VND",[functions convertFromNumberToString:self.totalCart]]];
-    NSLog(@"chay vao roi ma %@",od.name);
     [self.cartView reloadData];
     [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
 }
@@ -127,12 +166,12 @@
     _orderaddress=data;
 }
 -(void)getDataOrderAddressFailed:(NSError *)error{
-    NSLog(@"Loi orderaddress: %@",[error description]);
+    [functions alert:@"Lỗi dữ liệu từ server" title:@"Error" buttonTitle:@"OK" controller:self];
 }
 
 //----Get time from class timepickerviewcontroller
 -(void)getTime:(TimePickerViewController *)controller date:(NSDate *)date{
-    
+    self.time_delivery=[functions convertDateToString:date];
     [self.lblTime setTitle:[functions convertDateToString:date] forState:UIControlStateNormal];
 }
 
@@ -163,9 +202,22 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     if ([segue.identifier isEqualToString:@"processCart"]) {
-        loginViewController *loginViewController= segue.destinationViewController;
-        loginViewController.ProductCart = self.cartArray;
-        loginViewController.total = self.totalCart;
+        if(self.time_delivery==nil){
+            NSDate*date=[NSDate date];
+            self.time_delivery=[functions convertDateToString:date];
+        }
+        ProcessCartViewController*_processVC=segue.destinationViewController;
+        _processVC.idEstore = self.objectOrderAddress.sid;
+        _processVC.idArea=self.objectOrderAddress.address;
+        _processVC.ProductCart=self.cartArray;
+        _processVC._objectOrderAddress=self.objectOrderAddress;
+        _processVC.id_delivery=self.objectOrderAddress.id;
+        _processVC.form_of_payment=self.paymentObject.id;
+        NSArray* foo = [self.time_delivery componentsSeparatedByString: @" ngày "];
+        _processVC.delivery_date=[foo objectAtIndex: 1];
+        _processVC.delivery_time=[foo objectAtIndex:0];
+        _processVC.total = self.totalCart;
+        _processVC.vat=[NSString stringWithFormat:@"%d",self.vat];
     }
 }
 - (void)didReceiveMemoryWarning
@@ -174,18 +226,9 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)dealloc {
-    [_btnProcess release];
-    [txtTotalCart release];
-    [_lblNameArea release];
-    [_lblFeeDelivery release];
-    [_lblTime release];
-    [_lblPaymentMethod release];
-    [_btnThanhToan release];
-    [super dealloc];
-}
 
 - (IBAction)Process:(id)sender {
+    [self performSegueWithIdentifier:@"processCart" sender:self];
 }
 
 - (IBAction)showPopupPicker:(id)sender {
@@ -198,9 +241,5 @@
 }
 - (IBAction)showPopupPayment:(id)sender {
     [self presentPopupViewController:self._paymentviewcontroller animationType:ANIMATE];
-}
-
-- (IBAction)thanhtoan:(id)sender {
-    [self performSegueWithIdentifier:@"thanhtoan" sender:self];
 }
 @end

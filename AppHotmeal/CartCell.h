@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface CartCell : UITableViewCell
-@property (retain, nonatomic) IBOutlet UILabel *nameProduct;
-@property (retain, nonatomic) IBOutlet UITextField *quantity;
-@property (retain, nonatomic) IBOutlet UILabel *price;
+@property (strong, nonatomic) IBOutlet UILabel *nameProduct;
+@property (strong, nonatomic) IBOutlet UITextField *quantity;
+@property (strong, nonatomic) IBOutlet UILabel *price;
 
 - (IBAction)checkPrice:(id)sender;
 @end

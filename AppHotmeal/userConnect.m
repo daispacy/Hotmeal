@@ -20,14 +20,14 @@
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];
     
-    NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] init] autorelease];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     NSString* urlString=[NSString stringWithFormat:HOST];
     [request setURL:[NSURL URLWithString:urlString]];
     [request setHTTPMethod:@"POST"];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     [request setHTTPBody:postData];
-    [[NSURLConnection alloc]initWithRequest:request delegate:self];
+    (void)[[NSURLConnection alloc]initWithRequest:request delegate:self];
 }
 -(void)connection:(NSURLConnection*)connection didReceiveData:(NSData *)data{
     NSString *strData = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];

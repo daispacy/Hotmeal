@@ -7,18 +7,51 @@
 //
 
 #import "indexAppDelegate.h"
-
+#import "userDAO.h"
+#import "loginViewController.h"
+#import "indexViewController.h"
+#import "checkInternet.h"
 @implementation indexAppDelegate
 
-- (void)dealloc
-{
-    [_window release];
-    [super dealloc];
-}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    /*test 1 so thu
+   
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
+        NSLog(@"Doing something...");
+    }];
+    
+    //you can add more blocks
+    [operation addExecutionBlock:^{
+        NSLog(@"Another block");
+    }];
+    
+    [operation setCompletionBlock:^{
+        NSLog(@"Doing something once the operation has finished...");
+    }];
+    
+    [queue addOperation:operation];
+    
+    end test */
+    
+    UIStoryboard*  sb = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                  bundle:nil];
+    loginViewController *one = [sb instantiateViewControllerWithIdentifier:@"login"];
+    indexViewController *two = [sb instantiateViewControllerWithIdentifier:@"index"];
+    
     // Override point for customization after application launch.
+    userDAO*_userDao=[[userDAO alloc]init];
+    NSLog([_userDao isUser]?@"TRUE":@"FALSE");
+    if ([_userDao isUser]) {
+        self.window.rootViewController=two;
+        [self.window makeKeyAndVisible];
+    } else {
+        self.window.rootViewController=one;
+        [self.window makeKeyAndVisible];
+    }
+    [checkInternet testInternetConnection];
     return YES;
 }
 

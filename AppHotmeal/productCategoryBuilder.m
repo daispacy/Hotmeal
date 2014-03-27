@@ -21,13 +21,23 @@
     //NSLog(@"Count %d", parseObject.count);
     
     NSMutableArray *estores=[[NSMutableArray alloc]init];
-    for (NSDictionary* rs in parseObject) {
-        productCategory *es=[[productCategory alloc]init];
-        [es setId:[rs objectForKey:@"id"]];
-        [es setName:[rs objectForKey:@"name"]];
-        [estores addObject:es];
+    @try {
+        for (NSDictionary* rs in parseObject) {
+            productCategory *es=[[productCategory alloc]init];
+            [es setId:[rs objectForKey:@"id"]];
+            [es setName:[rs objectForKey:@"name"]];
+            [estores addObject:es];
+        }
     }
-    return estores;
+    @catch (NSException *exception) {
+        NSLog(@"%@",exception);
+    }
+    @finally {
+        return estores;
+    }
+    
+    
+    
 }
 
 @end

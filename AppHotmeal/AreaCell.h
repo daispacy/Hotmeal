@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface AreaCell : UITableViewCell
-@property (retain, nonatomic) IBOutlet UILabel *name;
+@property (strong, nonatomic) IBOutlet UILabel *name;
 
 @end

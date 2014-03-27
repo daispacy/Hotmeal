@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface ProductCell : UITableViewCell
-@property (retain, nonatomic) IBOutlet UIImageView *imageProduct;
-@property (retain, nonatomic) IBOutlet UILabel *nameProduct;
-@property (retain, nonatomic) IBOutlet UILabel *price;
-@property (retain, nonatomic) IBOutlet UIButton *btn;
+@property (strong, nonatomic) IBOutlet UIImageView *imageProduct;
+@property (strong, nonatomic) IBOutlet UILabel *nameProduct;
+@property (strong, nonatomic) IBOutlet UILabel *price;
+@property (strong, nonatomic) IBOutlet UIButton *btn;
 
 @end

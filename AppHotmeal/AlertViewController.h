@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 @protocol AlertViewDelegate;
 @interface AlertViewController : UIViewController{
-    id<AlertViewDelegate>delegate;
+    id<AlertViewDelegate>__weak delegate;
 }
-@property(assign,nonatomic)id<AlertViewDelegate>delegate;
-@property (retain, nonatomic) IBOutlet UILabel *lblAlert;
+@property(weak,nonatomic)id<AlertViewDelegate>delegate;
+@property (strong, nonatomic) IBOutlet UILabel *lblAlert;
 @end
 @protocol AlertViewDelegate<NSObject>
 @optional

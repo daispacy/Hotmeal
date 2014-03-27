@@ -11,13 +11,25 @@
 #import "estoreDelegate.h"
 #import "staticConfig.h"
 #import "functions.h"
-
+#import "HUD.h"
 
 @implementation estoreConnect
--(void)getEstore:(NSString*)idArea page:(NSInteger)page{
-    NSString* urlString=[NSString stringWithFormat:@"%@apikey=%@&op=%@&ida=%@&page=%@",HOST,API,OPLISTING,idArea,[functions convertFromNumberToString:page]];
+-(void)getEstore:(NSString*)idArea cid:(NSString*)cid page:(NSInteger)page kw:(NSString *)kw{
+    //[HUD showUIBlockingIndicatorWithText:@"Loading..."];
+    dispatch_async(kBgQueue, ^{
+    
+    NSString* urlString=[NSString stringWithFormat:@"%@apikey=%@&op=%@&ida=%@&cid=%@&page=%@&kw=%@",HOST,API,OPLISTING,idArea,cid,[functions convertFromNumberToString:page],kw];
+    
     NSLog(@"request from estoreConnect: %@",urlString);
-    NSData *jsonData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:urlString] encoding:NSUTF8StringEncoding error:nil] dataUsingEncoding:NSUTF8StringEncoding];
-    [self.delegate getData:jsonData];
+    NSData *jsonData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] encoding:NSUTF8StringEncoding error:nil] dataUsingEncoding:NSUTF8StringEncoding];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //NSLog(@"json estore: %@",jsonData);
+            [self.delegate getData:jsonData];
+           // [HUD hideUIBlockingIndicator];
+            
+            
+        });
+    });
+
 }
 @end

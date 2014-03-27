@@ -13,7 +13,7 @@
 #import "orderaddressConnect.h"
 #import "functions.h"
 @interface PlaceDeliveryViewController ()<orderaddressManagerDelegate>{
-    NSArray*_orderaddress;
+    NSMutableArray*_orderaddress;
     orderaddressManager*_odManager;
 }
 
@@ -40,28 +40,28 @@
     _odManager.odConnect=[[orderaddressConnect alloc]init];
     _odManager.odConnect.delegate=_odManager;
     _odManager.delegate=self;
-    //[_odManager receiveData:self.idEstore idarea:nil];
+    [_odManager receiveData:self.idEstore idarea:@""];
     // Do any additional setup after loading the view from its nib.
 }
 -(void)viewDidAppear:(BOOL)animated{
     self.idEstore=[self.delegate getIdEstore:self];
     //[_odManager receiveData:self.idEstore idarea:nil];
-    NSLog(@"%@",self.idEstore);
+   
 }
 -(void)viewWillAppear:(BOOL)animated{
     self.idEstore=[self.delegate getIdEstore:self];
     [_odManager receiveData:self.idEstore idarea:@""];
-    NSLog(@"%@",self.idEstore);
+   
 }
 -(void)getDataOrderAddress:(NSArray *)data{
-    
+    _orderaddress=[[NSMutableArray alloc]init];
+    [_orderaddress addObjectsFromArray:data];
     NSSortDescriptor *sort=[NSSortDescriptor sortDescriptorWithKey:@"price" ascending:YES];
-    [data sortUsingDescriptors:[NSArray arrayWithObject:sort]];
-    _orderaddress=data;
-    if(_orderaddress.count<1){
-        [functions alert:@"Quán chỉ giao đến khu vực hiện tại." title:@"Chú ý" buttonTitle:@"OK" controller:self];
-        [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
-    }
+    [_orderaddress sortUsingDescriptors:[NSArray arrayWithObject:sort]];
+    //if(_orderaddress.count<1){
+       // [functions alert:@"Quán chỉ giao đến khu vực hiện tại." title:@"Chú ý" buttonTitle:@"OK" controller:self];
+       // [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
+   // }
     [self.tableArea reloadData];
     
 }
@@ -72,6 +72,7 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    NSLog(@"nhung noi giao %d",_orderaddress.count);
     return _orderaddress.count;
     
 }
@@ -100,9 +101,5 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-- (void)dealloc {
-    [tableArea release];
-    [super dealloc];
 }
 @end

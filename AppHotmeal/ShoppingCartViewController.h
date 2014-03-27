@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "PlaceDeliveryViewController.h"
+#import "ProcessCartViewController.h"
 #import "PaymentViewController.h"
 #import "orderaddress.h"
-#import "loginViewController.h"
 #import "payment.h"
 @class ShoppingCartViewController;
 @protocol ShoppingCartViewContrllerDelegate <NSObject>
@@ -19,34 +19,46 @@
 -(NSString*)getIdEstore1:(ShoppingCartViewController*)controller;
 -(NSMutableArray*)getProduct:(ShoppingCartViewController*)controller;
 -(NSInteger)getTotalCart:(ShoppingCartViewController*)controller;
+-(NSInteger)getVat:(ShoppingCartViewController*)controller;
 @end
 @interface ShoppingCartViewController : UIViewController{
     IBOutlet UITableView* cartView;
     NSMutableArray* cartArray;
     id<ShoppingCartViewContrllerDelegate>delegate;
 }
-- (IBAction)showPopupPicker:(id)sender;
-@property (retain, nonatomic) IBOutlet UITableView *cartView;
-@property (retain, nonatomic) IBOutlet UIButton *btnProcess;
-@property(strong,nonatomic)NSMutableArray* cartArray;
-@property(strong,nonatomic)NSArray* orderAddress;
-@property(assign,nonatomic)NSInteger totalCart;
-- (IBAction)Process:(id)sender;
-@property (retain, nonatomic) IBOutlet UILabel *txtTotalCart;
-@property (retain, nonatomic) IBOutlet UIButton *lblNameArea;
-@property (retain, nonatomic) IBOutlet UILabel *lblFeeDelivery;
-@property(strong,nonatomic)NSString*idArea;
-@property(strong,nonatomic)NSString*idStore;
+//define delegate
 @property(strong,nonatomic)id<ShoppingCartViewContrllerDelegate>delegate;
-@property (retain, nonatomic) IBOutlet UIButton *lblTime;
-- (IBAction)showPopupArea:(id)sender;
-@property(assign,nonatomic)NSInteger fee_delivery;
-@property(retain,nonatomic)PlaceDeliveryViewController*_placedeliveryviewcontroller;
-@property (retain, nonatomic) IBOutlet UIButton *btnThanhToan;
-@property (retain, nonatomic) IBOutlet UIButton *lblPaymentMethod;
-@property(strong,nonatomic)orderaddress*object;
-@property(retain,nonatomic)PaymentViewController*_paymentviewcontroller;
-- (IBAction)showPopupPayment:(id)sender;
-- (IBAction)thanhtoan:(id)sender;
+
+//define UIBOUTLET
+@property (strong, nonatomic) IBOutlet UILabel *txtTotalCart;
+@property (strong, nonatomic) IBOutlet UIButton *lblNameArea;
+@property (strong, nonatomic) IBOutlet UILabel *lblFeeDelivery;
+@property (strong, nonatomic) IBOutlet UITableView *cartView;
+@property (strong, nonatomic) IBOutlet UIButton *lblTime;
+@property (strong, nonatomic) IBOutlet UIButton *lblPaymentMethod;
+
+//define variables
+@property(strong,nonatomic)NSMutableArray* cartArray;//danh sach san pham
+@property(strong,nonatomic)NSArray* orderAddress;//danh sach dia chi giao hang
+@property(assign,nonatomic)NSInteger totalCart;//tong don hang
+@property(strong,nonatomic)NSString*idArea;//id area
+@property(strong,nonatomic)NSString*idStore;//id store
+@property(assign,nonatomic)NSInteger fee_delivery;//phi giao hang
+@property(strong,nonatomic)NSString*time_delivery;//thoi gian giao hang
+@property(assign,nonatomic)NSInteger vat;
+
+//define view controller
+@property(strong,nonatomic)PaymentViewController*_paymentviewcontroller;
+@property(strong,nonatomic)PlaceDeliveryViewController*_placedeliveryviewcontroller;
+@property(strong,nonatomic)ProcessCartViewController*_processCartviewcontroller;
+
+//define object
+@property(strong,nonatomic)orderaddress*objectOrderAddress;
 @property(nonatomic,strong)payment*paymentObject;
+
+//action
+- (IBAction)showPopupPayment:(id)sender;
+- (IBAction)showPopupArea:(id)sender;
+- (IBAction)Process:(id)sender;
+- (IBAction)showPopupPicker:(id)sender;
 @end

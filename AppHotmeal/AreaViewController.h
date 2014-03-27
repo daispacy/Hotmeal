@@ -10,13 +10,14 @@
 
 @protocol AreaViewDelegate;
 @interface AreaViewController : UIViewController{
-    id<AreaViewDelegate>delegate;
+    id<AreaViewDelegate>__weak delegate;
 }
-@property(assign,nonatomic)id<AreaViewDelegate>delegate;
-@property (retain, nonatomic) IBOutlet UIActivityIndicatorView *loading;
-@property (retain, nonatomic) IBOutlet UITableView *listArea;
+@property(weak,nonatomic)id<AreaViewDelegate>delegate;
+@property (strong, nonatomic) IBOutlet UITableView *listArea;
+@property(strong,nonatomic)NSArray*arrArea;
 @end
 @protocol AreaViewDelegate<NSObject>
 @optional
 -(void)setIdAndNameArea:(AreaViewController*)controller idarea:(NSString*)id namearea:(NSString*)name;
+-(NSArray*)getArrayArea;
 @end

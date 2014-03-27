@@ -7,7 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@interface cartManager : NSObject
-
+#import "cartDelegate.h"
+#import "cartManagerDelegate.h"
+@class cartConnect;
+@interface cartManager : NSObject<cartDelegate>
+@property(strong,nonatomic)cartConnect*crConnect;
+@property(strong,nonatomic)id<cartManagerDelegate> delegate;
+-(void)processCart:(NSString*)post;
 @end

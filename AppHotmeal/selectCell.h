@@ -10,5 +10,5 @@
 
 @interface selectCell : UITableViewCell
 
-@property (retain, nonatomic) IBOutlet UILabel *nameArea;
+@property (strong, nonatomic) IBOutlet UILabel *nameArea;
 @end

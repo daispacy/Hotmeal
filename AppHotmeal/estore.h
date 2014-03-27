@@ -18,4 +18,5 @@
 @property(strong,nonatomic)NSString* min_delivery;
 @property(assign,nonatomic)NSInteger pages;
 @property(assign,nonatomic)NSInteger total;
+@property(strong,nonatomic)NSString*message;
 @end

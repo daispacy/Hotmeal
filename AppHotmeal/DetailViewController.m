@@ -24,6 +24,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "functions.h"
 #import "staticConfig.h"
+#import "ListingViewController.h"
+#import "HUD.h"
 
 @interface DetailViewController()<estoreDetailManagerDelegate,productManagerDelegate,orderaddressManagerDelegate> {
     NSArray*_estore;
@@ -72,7 +74,7 @@
     _esManager.esConnect=[[estoreDetailConnect alloc]init];
     _esManager.esConnect.delegate=_esManager;
     _esManager.delegate=self;
-    [_esManager receiveData:idEstore];
+    
     /*
     _proCateManager=[[productCategoryManager alloc]init];
     _proCateManager.proCateConnect=[[productCategoryConnect alloc]init];
@@ -84,21 +86,27 @@
     _proManager.proConnect=[[productConnect alloc]init];
     _proManager.proConnect.delegate=_proManager;
     _proManager.delegate=(id)self;
-    [_proManager receiveData:idEstore];
+    
     
     
     _odManager=[[orderaddressManager alloc]init];
     _odManager.odConnect=[[orderaddressConnect alloc]init];
     _odManager.odConnect.delegate=_odManager;
     _odManager.delegate=self;
-    [_odManager receiveData:self.idEstore idarea:self.idArea];
     
+    
+    [_esManager receiveData:idEstore];
+    [_odManager receiveData:self.idEstore idarea:self.idArea];
+    [_proManager receiveData:idEstore];
+    
+    
+
+        
     ShoppingCartViewController *svc = [self.tabBarController.viewControllers objectAtIndex:1];
     svc.delegate = self;
 
    }
 -(NSMutableArray*)getProduct:(ShoppingCartViewController *)controller{
-    NSLog(@"product in CArt truoc khi gui %@",self.productInCart);
     return self.productInCart;
 }
 -(NSInteger)getTotalCart:(ShoppingCartViewController *)controller{
@@ -119,7 +127,7 @@
 -(void)displayData{
     estoreDetail *object=_estore[0];
     //set up image
-    NSString*url=[NSString stringWithFormat:@"http://hotmeal.vn/gallery/0/resources/l_%@",object.image];
+    NSString*url=[NSString stringWithFormat:@"%@%@",URLPATHIMGESTORE,object.image];
     NSURL * imageURL = [NSURL URLWithString:url];
     NSData * imageData = [NSData dataWithContentsOfURL:imageURL];
     UIImage * image = [UIImage imageWithData:imageData];
@@ -132,7 +140,7 @@
     _orderaddress=data;
 }
 -(void)getDataOrderAddressFailed:(NSError *)error{
-    NSLog(@"Loi orderaddress: %@",[error description]);
+    [functions alert:@"Lỗi dữ liệu từ server" title:@"Error" buttonTitle:@"OK" controller:self];
 }
 -(void)getDataProductCate:(NSArray *)data{
     _proCate=data;
@@ -147,13 +155,17 @@
     [self displayData];
 }
 -(void)getDataProductCateFailed:(NSError *)error{
-    NSLog(@"%@",error);
+    [functions alert:@"Lỗi dữ liệu từ server" title:@"Error" buttonTitle:@"OK" controller:self];
 }
 -(void)getDataProductFailed:(NSError *)error{
-    NSLog(@"%@",error);
+    [functions alert:@"Lỗi dữ liệu từ server" title:@"Error" buttonTitle:@"OK" controller:self];
 }
 -(void)getDataFailed:(NSError *)error{
-    NSLog(@"%@",error);
+    [functions alert:@"Lỗi dữ liệu từ server" title:@"Error" buttonTitle:@"OK" controller:self];
+}
+-(NSInteger)getVat:(ShoppingCartViewController *)controller{
+    estoreDetail *object=_estore[0];
+    return [object.vat doubleValue];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -326,9 +338,26 @@
 		        [[self.tabBarController.tabBar.items objectAtIndex:1] setBadgeValue:nil];
 	}
 }
-- (void)dealloc {
-    [productView release];
-    [super dealloc];
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
+    if ([segue.identifier isEqualToString:@"BackListing"]) {
+        //ListingViewController *listingViewController= segue.destinationViewController;
+       // listingViewController.idArea = self.idArea;
+       // listingViewController._nameArea=self.nameArea;
+    }
 }
-
+- (IBAction)backListingAction:(id)sender {
+    if (self.productInCart.count>0) {
+        [functions alertOKCancel:@"Bạn có chắc huỷ đơn hàng của nhà hàng này?" title:@"Chú ý" buttonOK:@"Huỷ" buttonCancel:@"Không" controller:self];
+    } else {
+       [self performSegueWithIdentifier:@"BackListing" sender:self];
+    }
+    
+}
+-(void)alertView:(UIAlertView *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex==0){
+        [self performSegueWithIdentifier:@"BackListing" sender:self];
+    }
+}
 @end

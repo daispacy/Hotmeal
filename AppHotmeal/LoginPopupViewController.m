@@ -11,6 +11,8 @@
 #import "user.h"
 #import "userManager.h"
 #import "userConnect.h"
+#import "functions.h"
+
 @interface LoginPopupViewController ()<userManagerDelegate>{
     NSArray*_user;
     userManager*_userManager;
@@ -48,20 +50,15 @@
     }
 }
 -(void)alert{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Thông báo" message: @"Số điện thoại hoặc mật khẩu không đúng!" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil]; [alert show]; [alert release];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Thông báo" message: @"Số điện thoại hoặc mật khẩu không đúng!" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil]; [alert show]; 
 }
 -(void)getDataUserFailed:(NSError *)error{
-    NSLog(@"Loi get user: %@",[error description]);
+    [functions alert:@"Lỗi dữ liệu từ server" title:@"Error" buttonTitle:@"OK" controller:self];
 }
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-- (void)dealloc {
-    [_txtUsername release];
-    [_txtPassword release];
-    [super dealloc];
 }
 - (IBAction)btnLogin:(id)sender {
     [_userManager receiveData:self.txtUsername.text password:self.txtPassword.text];

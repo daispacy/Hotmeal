@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol cartDelegate;
 @interface cartConnect : NSObject
-
+@property(strong,nonatomic)id<cartDelegate> delegate;
+-(void)processOrder:(NSString *)post;
 @end

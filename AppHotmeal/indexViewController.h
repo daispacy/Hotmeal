@@ -12,10 +12,11 @@
     IBOutlet UIButton *btnNext;
 }
 
-@property (retain, nonatomic) IBOutlet UITableView *selectArea;
+@property (strong, nonatomic) IBOutlet UITableView *selectArea;
 - (IBAction)btnNext:(id)sender;
-@property (retain, nonatomic) IBOutlet UIButton *btnNext;
+@property (strong, nonatomic) IBOutlet UIButton *btnNext;
 @property(strong,nonatomic)NSString*idA;
 @property(strong,nonatomic)NSString*nameArea;
 @property(strong,nonatomic)AreaViewController*_areaViewController;
+@property(strong,nonatomic)NSArray*listArea;
 @end

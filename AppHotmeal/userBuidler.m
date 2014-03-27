@@ -21,10 +21,10 @@
     //NSLog(@"Count %d", parseObject.count);
     //NSLog(@"%@",parseObject);
     NSMutableArray *estores=[[NSMutableArray alloc]init];
-            
+    @try {
         user *es=[[user alloc]init];
         [es setAddress:[parseObject objectForKey:@"address"]];
-        [es setId:[parseObject objectForKey:@"id"]];
+        [es setId:[[parseObject objectForKey:@"id"] doubleValue]];
         [es setName:[parseObject objectForKey:@"username"]];
         [es setFullname:[parseObject objectForKey:@"name"]];
         [es setEmail:[parseObject objectForKey:@"email"]];
@@ -33,8 +33,16 @@
         [es setError:[parseObject objectForKey:@"error"]];
         [es setMessage:[parseObject objectForKey:@"message"]];
         [estores addObject:es];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"%@",exception);
+    }
+    @finally {
+        return estores;
+    }
     
-    return estores;
+    
+    
 }
 
 @end

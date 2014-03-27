@@ -7,14 +7,19 @@
 //
 
 #import "ListingViewController.h"
+#import "SWRevealViewController.h"
+
 #import "estore.h"
 #import "estoreManager.h"
 #import "estoreConnect.h"
 #import "EstoreCell.h"
 #import "staticConfig.h"
+#import "functions.h"
+#import "HUD.h"
 
 @interface ListingViewController()<estoreManagerDelegate>{
     NSMutableArray*_estore;
+    NSMutableArray*_estoreKW;
     estoreManager*_esManager;
 }
 
@@ -29,6 +34,10 @@
 @synthesize footerLabel;
 @synthesize activityIndicator;
 @synthesize totalSize;
+@synthesize tblListing;
+@synthesize cId;
+@synthesize _kw;
+@synthesize txtSearch;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -42,80 +51,163 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    self.idArea = [defaults objectForKey:@"idArea"];
+    self._nameArea=[defaults objectForKey:@"nameArea"];
+    if(self.cId==NULL)self.cId=@"";
+    if(self.idArea==NULL)self.idArea=@"";
+    self._kw=@"";
+    
+    // Change button color
+    //_sidebarButton.tintColor = [UIColor colorWithWhite:0.96f alpha:0.2f];
+    
+    // Set the side bar button action. When it's tapped, it'll show up the sidebar.
+    _sidebarButton.target = self.revealViewController;
+    _sidebarButton.action = @selector(revealToggle:);
+        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    
     idEstore=[[NSMutableArray alloc]init];
 	_esManager=[[estoreManager alloc]init];
     self.page=1;
     _estore=[[NSMutableArray alloc]init];
+    
+    
     _esManager.esConnect=[[estoreConnect alloc]init];
     _esManager.esConnect.delegate=_esManager;
     _esManager.delegate=self;
+    
     [self setupTableViewFooter];
-    [_esManager receiveData:idArea page:self.page];
+    [_esManager receiveData:self.idArea cid:self.cId page:self.page kw:self._kw];
+     
 }
 
 -(void)getData:(NSArray*)data{
-    //NSSortDescriptor *sort=[NSSortDescriptor sortDescriptorWithKey:@"status" ascending:NO];
-    //[data sortUsingDescriptors:[NSArray arrayWithObject:sort]];
-            [_estore addObjectsFromArray:data];
+    
+    if(![self._kw isEqualToString:@""]){
+        NSLog(@"estore : %@",_estore);
+        [_estoreKW addObjectsFromArray:data];
+        NSLog(@"estoreKW : %@",_estoreKW);
+        estore *object=_estoreKW[0];
+        self.pages=object.pages;
+        self.totalSize=object.total;
+        if(self.page==1){
+            [self.tblListing reloadData];
+        }else{
+            [self fetchTable:_estoreKW.count+data.count totalDisplay:_estoreKW.count results:data];
+        }
+        //self.page++;
+    }else{
+        
+        [_estore addObjectsFromArray:data];
+        
         estore *object=_estore[0];
         self.pages=object.pages;
-    self.totalSize=object.total;
-    if(self.page==1){
-        [self.tableView reloadData];
-    }else{
-        [self fetchTable:_estore.count totalDisplay:self.page*15 results:data];
+        self.totalSize=object.total;
+        if(self.page==1){
+            [self.tblListing reloadData];
+        }else{
+                
+            [self fetchTable:_estore.count+data.count totalDisplay:_estore.count results:data];
+        }
+        
     }
-    self.page++;
+    
+    
 }
 -(void)getDataFailed:(NSError *)error{
-    NSLog(@"%@",error);
+    [functions alert:@"Lỗi dữ liệu từ server" title:@"Error" buttonTitle:@"OK" controller:self];
 }
 -(NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
-    NSLog(@"so luong _estore %d",_estore.count);
-        return _estore.count;
-    //return 100;
+    if (![self._kw isEqualToString:@""]) {
+            return _estoreKW.count;
+    } else {
+            return _estore.count;
+    }
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)theTableView{
     return 1;
 }
 -(UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    EstoreCell *cell=[self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    NSArray*Temp = _estore;
-    estore *object=Temp[indexPath.row];
-    [idEstore addObject:object.id];
-    [cell.name setText:object.name];
-    if (object.status==1) {
-        [cell.status setTextColor:[UIColor greenColor]];
-        [cell.status setText:@"Serving"];
+    // Assign our own background image for the cell
+    NSArray*Temp = [[NSArray alloc]init];
+    if (![self._kw isEqualToString:@""]) {
+        Temp = _estoreKW;
     } else {
-        [cell.status setTextColor:[UIColor redColor]];
-        [cell.status setText:@"Close"];
+        Temp = _estore;
     }
-    [cell.open_hour setText:object.listime];
-    [cell.like setText:[NSString stringWithFormat:@"%d",object.like]];
-    [cell.min_delivery setText:object.min_delivery];
-    //set up image
-    cell.imgView.image = nil;
-    NSString*url=[NSString stringWithFormat:@"http://hotmeal.vn/gallery/0/resources/a_%@",object.image];
-    dispatch_async(kBgQueue, ^{
-        NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-        if (imgData) {
-            UIImage *image = [UIImage imageWithData:imgData];
-            if (image) {
-                dispatch_async(dispatch_get_main_queue(), ^{
+    estore *object=Temp[indexPath.row];
+    
+    if([object.message isEqualToString:@""]){
+        
+        [idEstore addObject:object.id];
+        EstoreCell *cell=[self.tblListing dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+        [cell.name setText:object.name];
+        if (object.status==1) {
+            [cell.status setTextColor:[UIColor greenColor]];
+            [cell.status setText:@"Serving"];
+        } else {
+            [cell.status setTextColor:[UIColor redColor]];
+            [cell.status setText:@"Close"];
+        }
+        [cell.open_hour setText:object.listime];
+        [cell.like setText:[NSString stringWithFormat:@"%d",object.like]];
+        [cell.min_delivery setText:object.min_delivery];
+        //set up image
+        cell.imgView.image = nil;
+        NSString*url=[NSString stringWithFormat:@"%@%@",URLPATHIMGESTORE,object.image];
+        dispatch_async(kBgQueue, ^{
+            NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+            if (imgData) {
+                UIImage *image = [UIImage imageWithData:imgData];
+                if (image) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
                     //EstoreCell *updateCell=[self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
                         cell.imgView.image = image;
-                });
+                    });
+                }
             }
-        }
-    });
-    return cell;
+        });
+        UIImage *background = [self cellBackgroundForRowAtIndexPath:indexPath];
+        
+        UIImageView *cellBackgroundView = [[UIImageView alloc] initWithImage:background];
+        cellBackgroundView.image = background;
+        cell.backgroundView = cellBackgroundView;
+        return cell;
+        
+    }else{
+        NSLog(@"chay vao dya la  khong co ket qua");
+        UITableViewCell *cell = [self.tblListing dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+        //[cell.textLabel setTextAlignment:UITextAlignmentCenter];
+       [cell.textLabel setText:@"No result"];
+       return cell;
+    }
+    
+    
 }
+- (UIImage *)cellBackgroundForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSInteger rowCount = [self tableView:[self tblListing] numberOfRowsInSection:0];
+    NSInteger rowIndex = indexPath.row;
+    UIImage *background = nil;
+    
+    if (rowIndex == 0) {
+        background = [UIImage imageNamed:@"cell_top.png"];
+    } else if (rowIndex == rowCount - 1) {
+        background = [UIImage imageNamed:@"cell_bottom.png"];
+    } else {
+        background = [UIImage imageNamed:@"cell_middle.png"];
+    }
+    
+    return background;
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     if ([segue.identifier isEqualToString:@"idEstore"]) {
        
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        NSIndexPath *indexPath = [self.tblListing indexPathForSelectedRow];
         estore *object=_estore[indexPath.row];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults setObject:object.id forKey:@"idEstore"];
@@ -132,9 +224,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)dealloc {
-    [super dealloc];
-}
 
 #pragma mark - UIScrollViewDelegate Methods
 
@@ -145,6 +234,7 @@
     {
         // ask next page only if we haven't reached last page
         if (self.page<=self.pages) {
+           
             [self nextPage];
         }else{
             [self.activityIndicator stopAnimating];
@@ -153,8 +243,15 @@
 }
 
 -(void)nextPage{
-        [_esManager receiveData:idArea page:self.page];
+    self.page++;
+    if(self.page<=self.pages){
+        if(![self._kw isEqualToString:@""]){
+            [_esManager receiveData:idArea cid:self.cId page:self.page kw:@""];
+        }else{
+            [_esManager receiveData:idArea cid:self.cId page:self.page kw:self._kw];
+        }
         [self.activityIndicator startAnimating];
+    }
 }
 
 - (void)setupTableViewFooter
@@ -171,21 +268,21 @@
     [footerView addSubview:label];
     
     // set up activity indicator
-    UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     activityIndicatorView.center = CGPointMake(40, 22);
     activityIndicatorView.hidesWhenStopped = YES;
     
     self.activityIndicator = activityIndicatorView;
     [footerView addSubview:activityIndicatorView];
     
-    self.tableView.tableFooterView = footerView;
+    self.tblListing.tableFooterView = footerView;
 }
 
 - (void)updateTableViewFooter
 {
-    if (page != 0)
+    if (page != 1)
     {
-        self.footerLabel.text = [NSString stringWithFormat:@"%d/%d Nhà hàng", [_estore count], self.totalSize];
+        self.footerLabel.text = [NSString stringWithFormat:@"%d/%d Nhà hàng",[self._kw isEqualToString:@""]?[_estore count]:[_estoreKW count], self.totalSize];
     } else
     {
         self.footerLabel.text = @"";
@@ -204,14 +301,24 @@
     // nicer way : use insertRowsAtIndexPaths:withAnimation:
     NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
     NSInteger i = totalResults - total;
+    
     for(NSDictionary *result in results)
     {
         [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
         i++;
     }
     
-    [self.tableView beginUpdates];
-    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
-    [self.tableView endUpdates];
+    [self.tblListing beginUpdates];
+    [self.tblListing insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationMiddle];
+    [self.tblListing endUpdates];
 }
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    NSLog(@"Search Clicked");
+    _estoreKW=[[NSMutableArray alloc]init];
+    self.page=1;
+    self._kw=self.txtSearch.text;
+    [_esManager receiveData:idArea cid:self.cId page:self.page kw:self.txtSearch.text];
+    [self updateTableViewFooter];
+}
+
 @end

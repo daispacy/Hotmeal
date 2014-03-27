@@ -9,12 +9,22 @@
 #import "areaConnect.h"
 #import "areaDelegate.h"
 #import "staticConfig.h"
+#import "HUD.h"
 
 @implementation areaConnect
 -(void)getArea{
-    NSString* urlString=[NSString stringWithFormat:@"%@apikey=%@&op=%@",HOST,API,OPAREA];
-    NSData *jsonData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:urlString] encoding:NSUTF8StringEncoding error:nil] dataUsingEncoding:NSUTF8StringEncoding];
-    [self.delegate getDataArea:jsonData];
+    [HUD showUIBlockingIndicatorWithText:@"Loading..."];
+    dispatch_async(kBgQueue, ^{
+        NSString* urlString=[NSString stringWithFormat:@"%@apikey=%@&op=%@",HOST,API,OPAREA];
+        NSData *jsonData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:urlString] encoding:NSUTF8StringEncoding error:nil] dataUsingEncoding:NSUTF8StringEncoding];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.delegate getDataArea:jsonData];
+            [HUD hideUIBlockingIndicator];
+        
+        
+       });
+    });
+    
 }
 
 @end

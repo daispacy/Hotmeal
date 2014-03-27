@@ -21,15 +21,24 @@
     //NSLog(@"Count %d", parseObject.count);
     //NSLog(@"%@",parseObject);
     NSMutableArray *estores=[[NSMutableArray alloc]init];
-    for (NSDictionary* rs in parseObject) {
-        payment *es=[[payment alloc]init];
-        [es setName:[rs objectForKey:@"name"]];
-        [es setId:[rs objectForKey:@"Id"]];
-        [es setFee:[[rs objectForKey:@"fee"] doubleValue]];
-        [es setPosition:[[rs objectForKey:@"position"]doubleValue]];
-        [estores addObject:es];
+    @try {
+        for (NSDictionary* rs in parseObject) {
+            payment *es=[[payment alloc]init];
+            [es setName:[rs objectForKey:@"name"]];
+            [es setId:[rs objectForKey:@"Id"]];
+            [es setFee:[[rs objectForKey:@"fee"] doubleValue]];
+            [es setPosition:[[rs objectForKey:@"position"]doubleValue]];
+            [estores addObject:es];
+        }
     }
-    return estores;
+    @catch (NSException *exception) {
+        NSLog(@"%@",exception);
+    }
+    @finally {
+        return estores;
+    }
+    
+    
 }
 
 @end

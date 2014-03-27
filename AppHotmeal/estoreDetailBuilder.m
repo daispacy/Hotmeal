@@ -12,7 +12,7 @@
 +(NSArray*)getData:(NSData *)data error:(NSError **)error{
     NSError*err=nil;
     NSDictionary *parseObject=[NSJSONSerialization JSONObjectWithData:data options:kNilOptions  error:&err];
-    //NSLog(@"%@",parseObject);
+    NSLog(@"%@",parseObject);
     if(err!=nil){
         *error=err;
         return nil;
@@ -21,7 +21,7 @@
     //NSLog(@"Count %d", results.count);
     
     NSMutableArray *estores=[[NSMutableArray alloc]init];
-  
+    @try {
         estoreDetail *es=[[estoreDetail alloc]init];
         [es setProperties:[parseObject objectForKey:@"image"]];
         [es setProperties:[parseObject objectForKey:@"properties"]];
@@ -30,7 +30,16 @@
         [es setEn_name:[parseObject objectForKey:@"en_name"]];
         [es setVn_description:[parseObject objectForKey:@"vn_description"]];
         [es setImage:[[es.properties objectForKey:@"avatar"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        [es setVat:[es.properties objectForKey:@"vat"]];
         [estores addObject:es];
-    return estores;
+    }
+    @catch (NSException *exception) {
+        NSLog(@"%@",exception);
+    }
+    @finally {
+        return estores;
+    }
+    
+    
 }
 @end

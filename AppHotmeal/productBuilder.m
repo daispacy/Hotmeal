@@ -21,28 +21,37 @@
     //NSLog(@"Count %d", parseObject.count);
    //NSLog(@"%@",parseObject);
     NSMutableArray *estores=[[NSMutableArray alloc]init];
-    for (NSDictionary* rs in parseObject) {
-        
-        product *es=[[product alloc]init];
-        [es setProperties:[rs objectForKey:@"properties"]];
-        [es setStore_id:[rs objectForKey:@"store_id"]];
-        [es setId:[rs objectForKey:@"id"]];
-        [es setName:[rs objectForKey:@"name"]];
-        [es setPrice:[rs objectForKey:@"price"]];
-        [es setSale_price:[rs objectForKey:@"sale_price"]];
-                //NSString *someString = [NSString stringWithFormat:@"%.0f VND", [es.price doubleValue]];
-        NSArray*photos= [es.properties objectForKey:@"photos"];
-        if([photos count]>0){
-        NSString *img = [photos objectAtIndex:0];
-        if(img !=NULL){
+    @try {
+        for (NSDictionary* rs in parseObject) {
             
-        [es setImage:[img stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-            //NSLog(@"hinh anh cua es: %@",es.image);
-        }
-        }
+            product *es=[[product alloc]init];
+            [es setProperties:[rs objectForKey:@"properties"]];
+            [es setStore_id:[rs objectForKey:@"store_id"]];
+            [es setId:[rs objectForKey:@"id"]];
+            [es setName:[rs objectForKey:@"name"]];
+            [es setPrice:[rs objectForKey:@"price"]];
+            [es setSale_price:[rs objectForKey:@"sale_price"]];
+            //NSString *someString = [NSString stringWithFormat:@"%.0f VND", [es.price doubleValue]];
+            NSArray*photos= [es.properties objectForKey:@"photos"];
+            if([photos count]>0){
+                NSString *img = [photos objectAtIndex:0];
+                if(img !=NULL){
+                    
+                    [es setImage:[img stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+                    //NSLog(@"hinh anh cua es: %@",es.image);
+                }
+            }
             
-        [estores addObject:es];
+            [estores addObject:es];
+        }
+
     }
-    return estores;
+    @catch (NSException *exception) {
+        NSLog(@"%@",exception);
+    }
+    @finally {
+        return estores;
+    }
+    
 }
 @end

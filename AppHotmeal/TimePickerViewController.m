@@ -38,10 +38,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)dealloc {
-    [timePicker release];
-    [super dealloc];
-}
 - (IBAction)selectTime:(id)sender {
     self.time=self.timePicker.date;
     [self.delegate getTime:self date:self.time];

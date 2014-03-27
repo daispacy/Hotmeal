@@ -11,15 +11,16 @@
 @interface DetailViewController : UIViewController<ShoppingCartViewContrllerDelegate>{
     
 }
-@property (retain, nonatomic) IBOutlet UIImageView *imgView;
-@property (retain, nonatomic) IBOutlet UILabel *txtName;
-@property (retain, nonatomic) IBOutlet UITableView *productView;
-@property (retain, nonatomic) IBOutlet UILabel *txtDescription;
+@property (strong, nonatomic) IBOutlet UIImageView *imgView;
+@property (strong, nonatomic) IBOutlet UILabel *txtName;
+@property (strong, nonatomic) IBOutlet UITableView *productView;
+@property (strong, nonatomic) IBOutlet UILabel *txtDescription;
 @property(strong,nonatomic)NSString *idEstore;
 @property(strong,nonatomic)NSString*idArea;
 @property(strong,nonatomic)NSMutableArray *productInCart;
 @property(assign,nonatomic)NSInteger totalCart;
 @property(strong,nonatomic)NSString*nameArea;
+- (IBAction)backListingAction:(id)sender;
 
 @property(assign,nonatomic)NSInteger status;
 @end

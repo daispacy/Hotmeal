@@ -11,10 +11,10 @@
 @interface TimePickerViewController : UIViewController{
     
 }
-@property(retain,nonatomic)id<TimePickerViewDelegate>delegate;
-@property (retain, nonatomic) IBOutlet UIDatePicker *timePicker;
+@property(strong,nonatomic)id<TimePickerViewDelegate>delegate;
+@property (strong, nonatomic) IBOutlet UIDatePicker *timePicker;
 - (IBAction)selectTime:(id)sender;
-@property(assign,nonatomic)NSDate*time;
+@property(weak,nonatomic)NSDate*time;
 
 @end
 @protocol TimePickerViewDelegate<NSObject>

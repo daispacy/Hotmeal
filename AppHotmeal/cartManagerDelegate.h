@@ -9,5 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @protocol cartManagerDelegate <NSObject>
-
+-(void)getDataCart:(NSArray*)data;
+-(void)getDataCartFailed:(NSError*)error;
 @end

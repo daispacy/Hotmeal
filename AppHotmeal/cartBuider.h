@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface cartBuider : NSObject
-
++(NSArray*)getDataCart:(NSData*)data error:(NSError**)error;
 @end

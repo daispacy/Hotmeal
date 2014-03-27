@@ -37,8 +37,4 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)dealloc {
-    [lblAlert release];
-    [super dealloc];
-}
 @end

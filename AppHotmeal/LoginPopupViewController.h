@@ -10,11 +10,11 @@
 #import "user.h"
 @protocol LoginPopupViewDelegate;
 @interface LoginPopupViewController : UIViewController{
-    id<LoginPopupViewDelegate>delegate;
+    id<LoginPopupViewDelegate>__weak delegate;
 }
-@property(assign,nonatomic)id<LoginPopupViewDelegate>delegate;
-@property (retain, nonatomic) IBOutlet UITextField *txtUsername;
-@property (retain, nonatomic) IBOutlet UITextField *txtPassword;
+@property(weak,nonatomic)id<LoginPopupViewDelegate>delegate;
+@property (strong, nonatomic) IBOutlet UITextField *txtUsername;
+@property (strong, nonatomic) IBOutlet UITextField *txtPassword;
 - (IBAction)btnLogin:(id)sender;
 - (IBAction)btnRegister:(id)sender;
 @end

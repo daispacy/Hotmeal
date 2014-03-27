@@ -8,21 +8,18 @@
 
 #import "AreaViewController.h"
 #import "area.h"
-#import "areaManager.h"
-#import "areaConnect.h"
 #import "staticConfig.h"
 
-@interface AreaViewController ()<areaManagerDelegate>{
-    NSArray*_area;
-    areaManager*_areaManager;
-}
+@interface AreaViewController (){
+    }
 
 @end
 
 @implementation AreaViewController
 @synthesize delegate;
 @synthesize listArea;
-@synthesize loading;
+@synthesize arrArea;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -34,45 +31,21 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    _areaManager=[[areaManager alloc]init];
-    _areaManager.esConnect=[[areaConnect alloc]init];
-    _areaManager.esConnect.delegate=_areaManager;
-    _areaManager.delegate=self;
-    [_areaManager receiveDataArea];
-    [loading startAnimating];
-    loading.hidesWhenStopped = YES;
-    NSStringEncoding *encoding = NULL;
-    dispatch_queue_t queue = dispatch_get_global_queue(
-                                                       DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_async(queue, ^{
-        NSString* urlString=[NSString stringWithFormat:@"%@apikey=%@&op=%@",HOST,API,OPAREA];
-        NSLog(@"url: %@",urlString);
-        NSURL* url=[[NSURL alloc]initWithString:urlString];
-        //Load the json on another thread
-        NSString *jsonreturn = [[NSString alloc] initWithContentsOfURL:url usedEncoding:encoding error:NULL];
-        [jsonreturn release];
-        //When json is loaded stop the indicator
-        [loading performSelectorOnMainThread:@selector(stopAnimating) withObject:nil waitUntilDone:YES];
-    });
-}
--(void)getDataArea:(NSArray*)data{
     
-    _area=data;
-    [self.listArea reloadData];
+    [super viewDidLoad];
+    
+    self.arrArea=[self.delegate getArrayArea];
 }
--(void)getDataAreaFailed:(NSError *)error{
-    NSLog(@"%@",error);
-}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _area.count;
+    return self.arrArea.count;
     
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 
 {
-    area*object = _area[indexPath.row];
+    area*object = self.arrArea[indexPath.row];
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = (UITableViewCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -85,7 +58,7 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    area*object =_area[indexPath.row];
+    area*object =self.arrArea[indexPath.row];
     [self.delegate setIdAndNameArea:self idarea:object.id namearea:object.name];
 }
 
@@ -95,9 +68,4 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)dealloc {
-    [listArea release];
-    [loading release];
-    [super dealloc];
-}
 @end

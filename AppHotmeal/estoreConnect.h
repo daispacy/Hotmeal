@@ -10,5 +10,5 @@
 @protocol estoreDelegate;
 @interface estoreConnect : NSObject
 @property(strong,nonatomic)id<estoreDelegate> delegate;
--(void)getEstore:(NSString*)idArea page:(NSInteger)page;
+-(void)getEstore:(NSString*)idArea cid:(NSString*)cid page:(NSInteger)page kw:(NSString*)kw;
 @end

@@ -10,10 +10,10 @@
 #import "payment.h"
 @protocol PaymentViewDelegate;
 @interface PaymentViewController : UIViewController{
-    id<PaymentViewDelegate>delegate;
+    id<PaymentViewDelegate>__weak delegate;
 }
-@property (retain, nonatomic) IBOutlet UITableView *tblPayment;
-@property(assign,nonatomic)id<PaymentViewDelegate>delegate;
+@property (strong, nonatomic) IBOutlet UITableView *tblPayment;
+@property(weak,nonatomic)id<PaymentViewDelegate>delegate;
 @property(strong,nonatomic)NSString*idEstore;
 @end
 @protocol PaymentViewDelegate<NSObject>

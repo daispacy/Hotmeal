@@ -26,8 +26,4 @@
     // Configure the view for the selected state
 }
 
-- (void)dealloc {
-    [_nameArea release];
-    [super dealloc];
-}
 @end

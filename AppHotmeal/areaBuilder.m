@@ -8,6 +8,7 @@
 
 #import "areaBuilder.h"
 #import "area.h"
+
 @implementation areaBuilder
 +(NSArray*)getDataArea:(NSData *)data error:(NSError **)error{
     NSError*err=nil;
@@ -21,12 +22,21 @@
     //NSLog(@"Count %d", parseObject.count);
     
     NSMutableArray *estores=[[NSMutableArray alloc]init];
-    for (NSDictionary* rs in parseObject) {
-        area *es=[[area alloc]init];
-        [es setId:[rs objectForKey:@"id"]];
-        [es setName:[rs objectForKey:@"vn_name"]];
-        [estores addObject:es];
+    @try {
+        for (NSDictionary* rs in parseObject) {
+            area *es=[[area alloc]init];
+            [es setId:[rs objectForKey:@"id"]];
+            [es setName:[rs objectForKey:@"vn_name"]];
+            [estores addObject:es];
+        }
     }
-    return estores;
+    @catch (NSException *exception) {
+        NSLog(@"%@",exception);
+    }
+    @finally {
+        return estores;
+    }
+    
+    
 }
 @end

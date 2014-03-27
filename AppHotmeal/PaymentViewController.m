@@ -54,8 +54,8 @@
 }
 -(void)getDataPayment:(NSArray *)data{
     
-    NSSortDescriptor *sort=[NSSortDescriptor sortDescriptorWithKey:@"position" ascending:YES];
-    [data sortUsingDescriptors:[NSArray arrayWithObject:sort]];
+    //NSSortDescriptor *sort=[NSSortDescriptor sortDescriptorWithKey:@"position" ascending:YES];
+    //[data sortUsingDescriptors:[NSArray arrayWithObject:sort]];
     _payment=data;
     if(_payment.count<1){
         [functions alert:@"Quán chỉ chấp nhận thanh toán trực tiếp" title:@"Chú ý" buttonTitle:@"OK" controller:self];
@@ -102,8 +102,4 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)dealloc {
-    [tblPayment release];
-    [super dealloc];
-}
 @end

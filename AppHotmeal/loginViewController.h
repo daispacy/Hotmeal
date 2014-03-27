@@ -7,19 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-
 @interface loginViewController : UIViewController{
-    
     IBOutlet UITextField *username;
-    
     IBOutlet UITextField *password;
 }
-@property (retain, nonatomic) IBOutlet UITextField *username;
-@property (retain, nonatomic) IBOutlet UITextField *password;
+@property (strong, nonatomic) IBOutlet UITextField *username;
+@property (strong, nonatomic) IBOutlet UITextField *password;
 @property(assign,nonatomic)NSInteger total;
 @property(strong,nonatomic)NSArray* ProductCart;
 @property(strong,nonatomic)NSArray* UserArray;
 @property(assign,nonatomic)BOOL _error;
 - (IBAction)login:(id)sender;
+- (IBAction)changToViewRegister:(id)sender;
 
 @end

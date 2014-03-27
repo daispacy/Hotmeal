@@ -8,7 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface functions : NSObject
+
+
 //doi dinh dang chuoi sang dinh dang so
 +(NSString*)convertFromNumberToString:(NSInteger)number;
 
@@ -16,7 +19,7 @@
 +(BOOL)validateEmail:(NSString*)string;
 
 //kiem tra co phai la so
-+(BOOL)validateNumber:(NSString*)string;
++(BOOL)validateNumber:(NSString*)test;
 
 //kiem tra du textfield vao co rong khong
 +(BOOL)validateInput:(UITextField*)textFeild length:(NSInteger)length;
@@ -29,6 +32,7 @@
 
 //hien alert voi tin nhan
 +(void)alert:(NSString*)message title:(NSString*)title buttonTitle:(NSString*)btnTitle controller:(UIViewController*)controller;
++(void)alertOKCancel:(NSString*)message title:(NSString*)title buttonOK:(NSString*)btnTitle buttonCancel:(NSString*)btnTitle controller:(UIViewController*)controller;
 
 //chuyen date sang chuoi
 +(NSString*)convertDateToString:(NSDate*)date;

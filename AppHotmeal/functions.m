@@ -10,6 +10,7 @@
 
 @implementation functions
 
+
 +(NSString*)convertFromNumberToString:(NSInteger)bumber{
     NSNumber *someNumber = [NSNumber numberWithDouble:bumber];
     
@@ -53,12 +54,12 @@
     return TRUE;
 }
 
-+(BOOL)validateNumber:(NSString *)string{
-    NSCharacterSet *numberSet = [NSCharacterSet characterSetWithRange:NSMakeRange('0',10)];
-    NSString *trimmed = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    NSRange matchRange = [trimmed rangeOfCharacterFromSet:numberSet];
-    BOOL isNumeric = matchRange.location == 0 && matchRange.length == trimmed.length && trimmed.length > 0;
-    return isNumeric;
++(BOOL)validateNumber:(NSString *)test{
+    BOOL isValid = NO;
+    NSCharacterSet *alphaNumbersSet = [NSCharacterSet decimalDigitCharacterSet];
+    NSCharacterSet *stringSet = [NSCharacterSet characterSetWithCharactersInString:test];
+    isValid = [alphaNumbersSet isSupersetOfSet:stringSet];
+    return isValid;
 }
 
 +(BOOL)validatePassword:(NSString *)password{
@@ -73,8 +74,12 @@
 }
 
 +(void)alert:(NSString *)ms title:(NSString *)title buttonTitle:(NSString *)btnTitle controller:(UIViewController*)controller{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: title message:ms delegate:controller cancelButtonTitle:btnTitle otherButtonTitles:nil]; [alert show]; [alert release];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: title message:ms delegate:controller cancelButtonTitle:btnTitle otherButtonTitles:nil]; [alert show]; 
 }
++(void)alertOKCancel:(NSString *)ms title:(NSString *)title buttonOK:(NSString *)btnTitle buttonCancel:(NSString *)btnCancel controller:(UIViewController*)controller{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: title message:ms delegate:controller cancelButtonTitle:btnTitle otherButtonTitles:btnCancel, nil]; [alert show];
+}
+
 
 +(NSString*)convertDateToString:(NSDate *)date{
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];

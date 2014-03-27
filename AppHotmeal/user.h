@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface user : NSObject
-@property(strong,nonatomic)NSString*id;
+@property(assign,nonatomic)NSInteger id;
 @property(strong,nonatomic)NSString*phone;
 @property(strong,nonatomic)NSString*address;
 @property(strong,nonatomic)NSString*name;
